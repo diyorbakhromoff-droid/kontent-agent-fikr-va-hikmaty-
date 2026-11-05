@@ -1,0 +1,33 @@
+name: Fetch media
+# Claude pushes requests/<name>.json = [{"url": "...", "path": "media/..."}]
+# This job downloads each file (GitHub has open internet) and commits it back.
+on:
+  push:
+    paths: ["requests/**.json"]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: { group: fetch, cancel-in-progress: false }
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download requested files
+        run: |
+          set -e
+          for req in requests/*.json; do
+            [ -f "$req" ] || continue
+            n=$(jq length "$req")
+            for i in $(seq 0 $((n-1))); do
+              url=$(jq -r ".[$i].url" "$req"); out=$(jq -r ".[$i].path" "$req")
+              mkdir -p "$(dirname "$out")"
+              echo "-> $out"; curl -fsSL --retry 3 -o "$out" "$url"
+            done
+            git rm -q "$req"
+          done
+      - name: Commit
+        run: |
+          git config user.name "reels-bot"; git config user.email "reels-bot@users.noreply.github.com"
+          git add -A media requests || true
+          git diff --cached --quiet || (git commit -m "media: fetched files" && git push)
