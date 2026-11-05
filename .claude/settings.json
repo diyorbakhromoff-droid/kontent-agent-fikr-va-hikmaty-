@@ -1,0 +1,6 @@
+{
+  "permissions": {
+    "allow": ["Bash", "Read", "Write", "Edit", "Glob", "Grep", "WebSearch", "WebFetch", "mcp__plugin_telegram_telegram__reply", "mcp__plugin_telegram_telegram__react", "mcp__plugin_telegram_telegram__edit_message"],
+    "defaultMode": "acceptEdits"
+  }
+}
