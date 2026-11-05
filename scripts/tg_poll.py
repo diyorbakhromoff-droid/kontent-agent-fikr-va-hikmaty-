@@ -8,10 +8,16 @@ ROOT = pathlib.Path(".")
 CFG = ROOT / "config/telegram.json"
 STATE = ROOT / "config/telegram_offset.txt"
 
+ERRORS = []
 def call(method, **params):
     data = urllib.parse.urlencode({k: (json.dumps(v) if isinstance(v, (dict, list)) else v) for k, v in params.items()}).encode()
-    with urllib.request.urlopen(API + method, data=data, timeout=30) as r:
-        return json.loads(r.read())
+    try:
+        with urllib.request.urlopen(API + method, data=data, timeout=30) as r:
+            return json.loads(r.read())
+    except Exception as e:
+        body = getattr(e, "read", lambda: b"")().decode(errors="ignore")
+        ERRORS.append(f"{method}: {e} {body}")
+        return {"ok": False, "result": {"message_id": None} if method == "sendMessage" else []}
 
 def load(p, default):
     return json.loads(p.read_text()) if p.exists() else default
@@ -86,4 +92,9 @@ def main():
     STATE.write_text(str(offset))
     CFG.write_text(json.dumps(cfg, ensure_ascii=False, indent=1))
 
-main()
+try:
+    main()
+except Exception:
+    import traceback; ERRORS.append(traceback.format_exc())
+pathlib.Path("config").mkdir(exist_ok=True)
+pathlib.Path("config/poll_status.txt").write_text(time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()) + "\n" + ("\n".join(ERRORS) or "OK"))
