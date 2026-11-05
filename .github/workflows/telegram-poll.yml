@@ -3,6 +3,8 @@ name: Telegram poll
 on:
   schedule: [{ cron: "*/5 * * * *" }]
   workflow_dispatch:
+  push:
+    paths: ["poll/**"]
 permissions:
   contents: write
 concurrency: { group: telegram, cancel-in-progress: false }
