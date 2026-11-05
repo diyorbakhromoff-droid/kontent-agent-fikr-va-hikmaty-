@@ -1,32 +1,40 @@
 name: Telegram notify
-# Claude pushes notify/<name>.json = {"text": "...", "video": "media/x.mp4" (optional)}
-# Requires repo secrets TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID.
+# Claude pushes notify/<name>.json = {"text": "...", "video": "media/x.mp4" (optional), "approve_id": "reel001-script" (optional)}
+# With approve_id the message gets "Tasdiqlash / O'zgartirish" buttons.
 on:
   push:
     paths: ["notify/**.json"]
 permissions:
   contents: write
+concurrency: { group: telegram, cancel-in-progress: false }
 jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Send to Telegram
-        env:
-          TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          CHAT: ${{ secrets.TELEGRAM_CHAT_ID }}
+        env: { TOKEN: "${{ secrets.TELEGRAM_BOT_TOKEN }}" }
         run: |
           set -e
-          if [ -z "$TOKEN" ] || [ -z "$CHAT" ]; then echo "Telegram secrets not set"; exit 0; fi
+          [ -n "$TOKEN" ] || { echo "TELEGRAM_BOT_TOKEN secret not set"; exit 0; }
+          python3 scripts/tg_poll.py   # make sure chat id is known
+          CHAT=$(jq -r '.chat_id // empty' config/telegram.json 2>/dev/null || true)
+          [ -n "$CHAT" ] || { echo "Bot is not in a group yet"; exit 0; }
           for f in notify/*.json; do
             [ -f "$f" ] || continue
-            text=$(jq -r .text "$f"); video=$(jq -r '.video // empty' "$f")
-            if [ -n "$video" ] && [ -f "$video" ]; then
-              curl -fsS -F chat_id="$CHAT" -F caption="$text" -F video=@"$video" -F supports_streaming=true "https://api.telegram.org/bot$TOKEN/sendVideo" >/dev/null
-            else
-              curl -fsS --data-urlencode chat_id="$CHAT" --data-urlencode text="$text" "https://api.telegram.org/bot$TOKEN/sendMessage" >/dev/null
+            text=$(jq -r .text "$f"); video=$(jq -r '.video // empty' "$f"); aid=$(jq -r '.approve_id // empty' "$f")
+            kb=""
+            if [ -n "$aid" ]; then
+              kb=$(jq -cn --arg a "$aid" '{inline_keyboard:[[{text:"✅ Tasdiqlash",callback_data:("ok:"+$a)},{text:"✏️ O‘zgartirish",callback_data:("edit:"+$a)}]]}')
+              mkdir -p approvals; [ -f "approvals/$aid.json" ] || echo "{\"id\":\"$aid\",\"status\":\"pending\",\"comments\":[]}" > "approvals/$aid.json"
             fi
+            if [ -n "$video" ] && [ -f "$video" ]; then
+              resp=$(curl -fsS -F chat_id="$CHAT" -F caption="$text" -F video=@"$video" -F supports_streaming=true ${kb:+-F reply_markup="$kb"} "https://api.telegram.org/bot$TOKEN/sendVideo")
+            else
+              resp=$(curl -fsS --data-urlencode chat_id="$CHAT" --data-urlencode text="$text" ${kb:+--data-urlencode reply_markup="$kb"} "https://api.telegram.org/bot$TOKEN/sendMessage")
+            fi
+            if [ -n "$aid" ]; then mid=$(echo "$resp" | jq .result.message_id); jq --argjson m "$mid" '.message_id=$m | .status="pending"' "approvals/$aid.json" > t && mv t "approvals/$aid.json"; fi
             git rm -q "$f"
           done
           git config user.name "reels-bot"; git config user.email "reels-bot@users.noreply.github.com"
-          git diff --cached --quiet || (git commit -m "notify: sent" && git push)
+          git add -A . ; git diff --cached --quiet || (git commit -m "notify: sent" && git pull --rebase -q && git push)

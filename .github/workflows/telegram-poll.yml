@@ -1,0 +1,21 @@
+name: Telegram poll
+# Every 5 minutes: read button presses / replies from the Telegram group, store them in approvals/.
+on:
+  schedule: [{ cron: "*/5 * * * *" }]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency: { group: telegram, cancel-in-progress: false }
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Poll
+        env: { TOKEN: "${{ secrets.TELEGRAM_BOT_TOKEN }}" }
+        run: python3 scripts/tg_poll.py
+      - name: Commit
+        run: |
+          git config user.name "reels-bot"; git config user.email "reels-bot@users.noreply.github.com"
+          git add -A approvals config || true
+          git diff --cached --quiet || (git commit -m "telegram: approvals update" && git pull --rebase -q && git push)
