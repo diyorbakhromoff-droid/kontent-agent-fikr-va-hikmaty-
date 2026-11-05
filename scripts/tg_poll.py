@@ -62,6 +62,17 @@ def main():
                 rec["ask_message_id"] = m["result"]["message_id"]
             rec["message_id"] = cq["message"]["message_id"]
             f.parent.mkdir(exist_ok=True); f.write_text(json.dumps(rec, ensure_ascii=False, indent=1))
+        # new topic request: "/mavzu <topic>" (empty = agent picks a topic)
+        if msg and msg.get("text", "").split()[0:1] and msg["text"].split()[0].split("@")[0].lower() == "/mavzu":
+            topic = msg["text"].partition(" ")[2].strip()
+            q = load(ROOT / "queue/topics.json", [])
+            item = {"id": f"t{msg['date']}", "topic": topic or "(agent tanlaydi)", "by": name_of(msg.get("from", {})),
+                    "at": msg["date"], "status": "new"}
+            q.append(item)
+            (ROOT / "queue").mkdir(exist_ok=True)
+            (ROOT / "queue/topics.json").write_text(json.dumps(q, ensure_ascii=False, indent=1))
+            call("sendMessage", chat_id=msg["chat"]["id"], reply_to_message_id=msg["message_id"],
+                 text=f"📝 Qabul qilindi: {item['topic']}\nSsenariy tayyor bo'lgach shu guruhga tasdiqqa keladi.")
         # reply with change comments
         if msg and msg.get("reply_to_message") and msg.get("text"):
             rid = msg["reply_to_message"]["message_id"]
