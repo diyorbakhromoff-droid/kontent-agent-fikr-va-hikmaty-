@@ -16,10 +16,13 @@ jobs:
         env: { TOKEN: "${{ secrets.TELEGRAM_BOT_TOKEN }}" }
         run: |
           set -e
-          [ -n "$TOKEN" ] || { echo "TELEGRAM_BOT_TOKEN secret not set"; exit 0; }
+          git config user.name "reels-bot"; git config user.email "reels-bot@users.noreply.github.com"
+          status(){ mkdir -p config; echo "$(date -u +%FT%TZ) $1" > config/telegram_status.txt; git add -A config; git commit -qm "telegram status: $1" && git push -q; }
+          [ -n "$TOKEN" ] || { status "NO_TOKEN"; exit 0; }
+          me=$(curl -sS "https://api.telegram.org/bot$TOKEN/getMe" | jq -r '.result.username // "BAD_TOKEN"')
           python3 scripts/tg_poll.py   # make sure chat id is known
           CHAT=$(jq -r '.chat_id // empty' config/telegram.json 2>/dev/null || true)
-          [ -n "$CHAT" ] || { echo "Bot is not in a group yet"; exit 0; }
+          [ -n "$CHAT" ] || { status "NO_GROUP bot=$me"; exit 0; }
           for f in notify/*.json; do
             [ -f "$f" ] || continue
             text=$(jq -r .text "$f"); video=$(jq -r '.video // empty' "$f"); aid=$(jq -r '.approve_id // empty' "$f")
@@ -36,5 +39,5 @@ jobs:
             if [ -n "$aid" ]; then mid=$(echo "$resp" | jq .result.message_id); jq --argjson m "$mid" '.message_id=$m | .status="pending"' "approvals/$aid.json" > t && mv t "approvals/$aid.json"; fi
             git rm -q "$f"
           done
-          git config user.name "reels-bot"; git config user.email "reels-bot@users.noreply.github.com"
+          echo "$(date -u +%FT%TZ) OK bot=$me chat=$CHAT" > config/telegram_status.txt
           git add -A . ; git diff --cached --quiet || (git commit -m "notify: sent" && git pull --rebase -q && git push)
