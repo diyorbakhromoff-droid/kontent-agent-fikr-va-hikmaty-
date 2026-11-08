@@ -1,154 +1,232 @@
-import sys; sys.path.insert(0,'/home/claude')
+import sys, math, random; sys.path.insert(0,'/home/claude')
 import cta as C
 exec(open('/home/claude/build4.py').read().split('# ---------- reel004 ----------')[0].split('import cta as C')[1])
 C.SCENE_S='85.25'
-HEAD=HEAD.replace('</style>','''
-.grain{opacity:.10}.grain2{opacity:.08}.vign{background:radial-gradient(ellipse at 50% 40%,rgba(255,255,255,.18),rgba(0,0,0,0) 60%,rgba(0,0,0,.10))}
-.wt{color:#fff;text-shadow:0 4px 0 rgba(0,0,0,.12),0 10px 24px rgba(0,0,0,.18)}
-.pill{white-space:nowrap;background:#fff;font:900 40px/1 Nunito;padding:20px 32px;border-radius:60px;box-shadow:0 10px 0 rgba(0,0,0,.10),0 18px 30px rgba(0,0,0,.15)}
-.big{font:900 200px/1 Fraunces;letter-spacing:-4px}
-.tile{width:430px;height:300px;border-radius:34px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;box-shadow:0 12px 0 rgba(0,0,0,.12),0 24px 40px rgba(0,0,0,.18)}
-.bar{height:84px;border-radius:40px;transform-origin:left center}
-#banner{background:#fff;box-shadow:0 6px 0 rgba(0,0,0,.10),0 12px 24px rgba(0,0,0,.15)}
-.ayah2{width:930px;text-align:center;padding:44px 42px 40px;background:#fff;border-radius:30px;box-shadow:0 14px 0 rgba(0,0,0,.10),0 26px 44px rgba(0,0,0,.20)}
-.x{display:inline-block;color:#E8344E;font-weight:900}
-</style>''')
-G=lambda a,b,d=165: f'linear-gradient({d}deg,{a},{b})'
-b=bgs([(-1,9.55,G('#FF7A59','#FF3D8B')),(9.55,16.45,G('#3A2BFF','#8A3CFF')),(16.45,24.05,G('#00B8A9','#18D27E')),(24.05,32.55,G('#FFB000','#FF6A00')),
-       (32.55,44.15,G('#1E90FF','#5B4BFF')),(44.15,55.3,G('#8A3CFF','#D63CC8')),(55.3,62.93,G('#0B1650','#3A2BFF',180)),(62.93,76.92,G('#00A8B5','#2D7BFF')),
-       (76.92,85.25,G('#FF3D8B','#FFA600')),(85.25,999,G('#FFF1D6','#FFD7B0'))])
-# scale svg
-scale='''<svg id="scale" width="860" height="560" viewBox="0 0 800 520" style="overflow:visible">
-<rect x="385" y="120" width="30" height="330" rx="12" fill="#fff"/><rect x="260" y="440" width="280" height="36" rx="18" fill="#fff"/>
-<g id="beam"><rect x="90" y="108" width="620" height="24" rx="12" fill="#FFE27A"/></g><circle cx="400" cy="120" r="26" fill="#FFB000" stroke="#fff" stroke-width="8"/>
-<g id="panL"><path d="M0 0L-120 170M0 0L120 170" stroke="#fff" stroke-width="5"/><path d="M-135 170Q0 250 135 170Z" fill="#fff"/>
- <text class="sv" data-t="16.5" x="0" y="300" text-anchor="middle" style="font:900 50px Nunito;fill:#fff">DUNYO</text>
- <text class="sv" data-t="16.6" x="0" y="372" text-anchor="middle" style="font:700 56px Amiri;fill:#FFF3A8">الدُّنْيَا</text>
- <text class="sv count" data-t="17.5" data-d="1.1" data-from="0" data-to="115" x="0" y="490" text-anchor="middle" style="font:900 120px Fraunces;fill:#FFE27A">0</text></g>
-<g id="panR"><path d="M0 0L-120 170M0 0L120 170" stroke="#fff" stroke-width="5"/><path d="M-135 170Q0 250 135 170Z" fill="#fff"/>
- <text class="sv" data-t="19.4" x="0" y="300" text-anchor="middle" style="font:900 50px Nunito;fill:#fff">OXIRAT</text>
- <text class="sv" data-t="19.5" x="0" y="372" text-anchor="middle" style="font:700 56px Amiri;fill:#FFF3A8">الْآخِرَة</text>
- <text class="sv count" data-t="20.45" data-d="1.1" data-from="0" data-to="115" x="0" y="490" text-anchor="middle" style="font:900 120px Fraunces;fill:#FFE27A">0</text></g>
-</svg>'''
-moon='<svg width="{s}" height="{s}" viewBox="0 0 60 60"><path d="M34 4a26 26 0 1 0 22 40A22 22 0 1 1 34 4z" fill="#FFD84A"/></svg>'
-import math
+FONTS=''.join(f"@font-face{{font-family:Corm;font-weight:{w};font-style:{st};src:url(fonts/cormorant-garamond-latin-{w}-{st}.woff2)}}" for w in (500,600,700) for st in ('normal','italic'))
+FONTS+="@font-face{font-family:Corm;font-weight:600;src:url(fonts/cormorant-garamond-latin-ext-600-normal.woff2);unicode-range:U+0100-024F}"
+FONTS+="@font-face{font-family:Corm;font-weight:600;font-style:italic;src:url(fonts/cormorant-garamond-latin-ext-600-italic.woff2);unicode-range:U+0100-024F}"
+FONTS+=''.join(f"@font-face{{font-family:Mont;font-weight:{w};src:url(fonts/montserrat-latin-{w}-normal.woff2)}}" for w in (500,600,700,800))
+FONTS+="@font-face{font-family:Ruqaa;font-weight:700;src:url(fonts/aref-ruqaa-arabic-700-normal.woff2)}"
+CSS=FONTS+'''
+:root{--terra:#E9C772;--ivory:#F3E7CF;--goldA:#F8E3A6;--goldB:#C9A24E}
+html,body{background:#05060A}
+#stage{color:var(--ivory)}
+#fx{position:absolute;inset:0}
+.grain{opacity:.07;mix-blend-mode:screen}.grain2{opacity:.05;mix-blend-mode:screen}
+.vign{background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 45%,rgba(0,0,0,.55) 100%)}
+.g{background:linear-gradient(180deg,#FFF1C4 0%,#E9C772 45%,#B48A3C 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.glow{filter:drop-shadow(0 0 18px rgba(233,199,114,.45)) drop-shadow(0 0 2px rgba(255,240,200,.6))}
+.h{font-family:Corm;font-weight:600;line-height:1.02;letter-spacing:-.5px}
+.it{font-family:Corm;font-style:italic;font-weight:600}
+.cap{font:600 25px/1 Mont;letter-spacing:.42em;text-transform:uppercase;color:#C9A45C;white-space:nowrap}
+.mont{font-family:Mont;font-weight:600}
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.02));border:1.5px solid rgba(212,175,95,.38);border-radius:26px;box-shadow:0 30px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.08)}
+.frame{position:relative;padding:46px 46px 42px;text-align:center}
+.frame:before{content:"";position:absolute;inset:12px;border:1px solid rgba(212,175,95,.28);border-radius:18px;pointer-events:none}
+.dia{position:absolute;width:16px;height:16px;background:#E9C772;transform:rotate(45deg);box-shadow:0 0 14px rgba(233,199,114,.8)}
+.rule{display:flex;align-items:center;gap:18px;justify-content:center}
+.rule i{display:block;height:1.5px;width:120px;background:linear-gradient(90deg,transparent,#C9A45C)}
+.rule i:last-child{background:linear-gradient(90deg,#C9A45C,transparent)}
+.rule b{display:block;width:10px;height:10px;background:#E9C772;transform:rotate(45deg)}
+.arabic{font-family:Amiri;font-weight:700;direction:rtl}
+.ruq{font-family:Ruqaa;font-weight:700;direction:rtl}
+.rv{color:rgba(243,231,207,.22)} .rv.on{color:var(--ivory)} .rv.t-terra.on{color:#E9C772}
+.t-terra{color:#E9C772}
+.serif{font-family:Corm;font-weight:600}
+#banner{background:none;box-shadow:none;color:#C9A45C;font:600 22px/1 Mont;letter-spacing:.36em;text-transform:uppercase;padding:10px 0;border-top:1px solid rgba(212,175,95,.45);border-bottom:1px solid rgba(212,175,95,.45);top:140px}
+#sub{top:1520px}
+#subbox{background:rgba(6,7,12,.62);border:1px solid rgba(212,175,95,.28);border-radius:16px;box-shadow:0 18px 40px rgba(0,0,0,.4);font:600 40px/1.15 Mont;padding:18px 30px}
+#subbox:before{display:none}
+#subbox span{color:var(--ivory)} #subbox span.up{color:rgba(243,231,207,.32)} #subbox span.cur{color:#E9C772}
+.chip{background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));color:var(--ivory);border:1.5px solid rgba(212,175,95,.4);box-shadow:0 20px 40px rgba(0,0,0,.4);font-family:Mont;font-weight:600}
+.hand{font-family:Corm;font-style:italic;font-weight:600}
+.x{display:inline-block;color:#E0705E;font-weight:700}
+.bar{height:12px;border-radius:8px;transform-origin:left center;position:relative}
+.bar:after{content:"";position:absolute;right:-9px;top:-6px;width:24px;height:24px;border-radius:50%;background:inherit;box-shadow:0 0 22px 4px currentColor}
+.rays{position:absolute;left:50%;top:50%;width:2600px;height:2600px;margin:-1300px 0 0 -1300px;background:repeating-conic-gradient(from 0deg,rgba(233,199,114,.06) 0 4deg,rgba(0,0,0,0) 4deg 15deg);-webkit-mask:radial-gradient(circle,#000 0,transparent 60%);mask:radial-gradient(circle,#000 0,transparent 60%)}
+'''
+HEAD=f'''<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"><script src="words.js"></script><script src="engine.js"></script><style>{CSS}</style></head><body><div id="stage">'''
+BG='<canvas id="fx" width="1080" height="1920"></canvas><div id="star" style="position:absolute;left:50%;top:46%;width:1500px;height:1500px;margin:-750px 0 0 -750px;opacity:.07"><svg viewBox="0 0 200 200" width="1500" height="1500"><g fill="none" stroke="#E9C772" stroke-width=".5"><rect x="45" y="45" width="110" height="110"/><rect x="45" y="45" width="110" height="110" transform="rotate(45 100 100)"/><circle cx="100" cy="100" r="36"/><circle cx="100" cy="100" r="78"/><rect x="62" y="62" width="76" height="76" transform="rotate(22.5 100 100)"/><rect x="62" y="62" width="76" height="76" transform="rotate(67.5 100 100)"/></g></svg></div><div class="grain"></div><div class="grain2"></div><div class="vign"></div>'
+def rule(t,top,o=''):
+    oo=f' data-o="{o}"' if o else ''
+    return f'<div class="a cx rule" data-t="{t}" data-a="blur"{oo} style="top:{top}px"><i></i><b></b><i></i></div>'
+def kw(words,size,top,extra='',o=''):
+    sp=' '.join(f'<span class="a{" g glow" if g else ""}" data-t="{t}" data-a="blur" style="position:relative;display:inline-block">{w}</span>' for w,t,g in words)
+    oo=f' data-o="{o}"' if o else ''
+    return f'<div class="a cx h" data-t="0" data-a="none"{oo} style="top:{top}px;width:980px;text-align:center;font-size:{size}px;{extra}">{sp}</div>'
+def card(t,label,arab,trans,top,asz=58,tsz=50,o=''):
+    oo=f' data-o="{o}"' if o else ''
+    return f'''<div class="a cx" data-t="{t}" data-a="rise"{oo} style="top:{top}px"><div class="glass frame" style="width:940px">
+ <div class="dia" style="left:-8px;top:50%;margin-top:-8px"></div><div class="dia" style="right:-8px;top:50%;margin-top:-8px"></div>
+ <div class="cap">{label}</div>
+ <div class="arabic g" style="font-size:{asz}px;line-height:1.9;margin-top:22px">{arab}</div>
+ <div class="rule" style="margin:8px 0 14px"><i style="width:80px"></i><b></b><i style="width:80px"></i></div>
+ <div class="h" style="font-size:{tsz}px;line-height:1.18">{trans}</div></div></div>'''
+moon='<svg width="{s}" height="{s}" viewBox="0 0 60 60"><path d="M34 4a26 26 0 1 0 22 40A22 22 0 1 1 34 4z" fill="url(#mg)" /></svg>'
 ring=''
 for i in range(12):
-    a=-math.pi/2+i*2*math.pi/12; x=540+300*math.cos(a)-40; y=560+300*math.sin(a)-40
-    ring+=f'<div class="a" data-t="{57.1+i*0.07:.2f}" data-a="pop" style="left:{x:.0f}px;top:{y:.0f}px">{moon.format(s=80)}</div>'
+    a=-math.pi/2+i*2*math.pi/12; x=540+300*math.cos(a)-38; y=640+300*math.sin(a)-38
+    ring+=f'<div class="a glow" data-t="{57.1+i*0.07:.2f}" data-a="zoom" data-d=".45" style="left:{x:.0f}px;top:{y:.0f}px">{moon.format(s=76)}</div>'
 def brow(t,name,n,w,col,top,dim=False):
-    op='opacity:.55;' if dim else ''
-    return f'''<div class="a" data-t="{t}" data-a="left" style="left:70px;top:{top}px;{op}display:flex;align-items:center;gap:20px">
- <div style="width:300px;font:900 50px Nunito;color:#fff;text-align:right;white-space:nowrap">{name}</div>
- <div class="bar gw" data-t="{t+.1}" data-d=".8" style="width:{w}px;background:{col}"></div>
- <div class="count wt" data-t="{t+.1}" data-d=".8" data-from="0" data-to="{n}" style="font:900 72px Fraunces">0</div></div>'''
+    op='opacity:.42;' if dim else ''
+    return f'''<div class="a" data-t="{t}" data-a="rise" style="left:40px;top:{top}px;{op}display:flex;align-items:center;gap:26px">
+ <div class="h" style="width:300px;font-size:54px;text-align:right;white-space:nowrap">{name}</div>
+ <div class="bar gw" data-t="{t+.1}" data-d=".9" style="width:{w}px;background:{col};color:{col}"></div>
+ <div class="h count g" data-t="{t+.1}" data-d=".9" data-from="0" data-to="{n}" style="font-size:78px;margin-left:14px">0</div></div>'''
+TX='style="font:600 34px Mont;letter-spacing:.3em;fill:#F3E7CF"'
+def pan(pid,name,ar,tn,tc):
+    return f'''<g id="{pid}"><path class="dr" data-t="{tn-.4}" data-d=".6" d="M0 0L-112 170M0 0L112 170" stroke="#C9A45C" stroke-width="2.5" fill="none"/>
+ <path class="dr" data-t="{tn-.1}" data-d=".6" d="M-140 170Q0 250 140 170Z" stroke="#E9C772" stroke-width="3.5" fill="rgba(233,199,114,.08)"/>
+ <text class="sv" data-t="{tn}" x="0" y="310" text-anchor="middle" {TX}>{name}</text>
+ <text class="sv" data-t="{tn+.1}" x="0" y="392" text-anchor="middle" style="font:700 66px Ruqaa;fill:#E9C772">{ar}</text>
+ <text class="sv count" data-t="{tc}" data-d="1.1" data-from="0" data-to="115" x="0" y="520" text-anchor="middle" fill="url(#gg)" style="font:600 150px Corm;filter:drop-shadow(0 0 14px rgba(233,199,114,.5))">0</text></g>'''
+scale=f'''<svg width="900" height="675" viewBox="0 0 800 600" style="overflow:visible">
+<defs><linearGradient id="gg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF1C4"/><stop offset=".5" stop-color="#E9C772"/><stop offset="1" stop-color="#B48A3C"/></linearGradient></defs>
+<path class="dr" data-t="16.5" data-d=".7" d="M400 150V545" stroke="#E9C772" stroke-width="5" fill="none"/>
+<path class="dr" data-t="16.7" data-d=".7" d="M270 560H530M310 545H490" stroke="#E9C772" stroke-width="5" fill="none" stroke-linecap="round"/>
+<g id="beam"><path class="dr" data-t="16.8" data-d=".7" d="M100 140H700" stroke="#F3D98E" stroke-width="6" fill="none" stroke-linecap="round"/></g>
+<circle id="rip" cx="400" cy="140" r="20" fill="none" stroke="#E9C772" stroke-width="3" opacity="0"/>
+<circle class="dr" data-t="16.9" data-d=".4" cx="400" cy="140" r="16" fill="#05060A" stroke="#E9C772" stroke-width="5"/>
+{pan('panL','DUNYO','الدنيا',16.6,17.5)}{pan('panR','OXIRAT','الآخرة',19.4,20.45)}
+</svg>'''
 s=f'''
-<div id="banner" data-s="9.6" data-e="85.0">Qur’on shifrlari: tarozidagi so‘zlar</div>
+<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF1C4"/><stop offset="1" stop-color="#C9A24E"/></linearGradient></defs></svg>
+<div id="banner" data-s="9.6" data-e="85.0">Qur’on shifrlari · tarozidagi so‘zlar</div>
 <section class="scene" data-s="-1" data-e="9.55">
- <div class="a cx" data-t="0.05" data-a="drop" style="top:250px"><div class="pill" style="font-size:34px;color:#FF3D8B;letter-spacing:3px">🔢 QUR’ON SHIFRLARI · 3</div></div>
- <div class="a cx wt" data-t="0.1" data-a="pop" style="top:400px;width:960px;text-align:center"><div class="serif" style="font-size:92px;line-height:1.08">Qur’ondagi <span style="color:#FFE27A">har bir so‘z</span> sanab chiqildi</div></div>
- <div class="a cx" data-t="2.8" data-a="up" style="top:720px"><div class="pill" style="font-size:52px;color:#FF3D8B">Natija hayratlanarli 🤯</div></div>
- <div class="a cx" data-t="5.6" data-a="pop" data-f="4" style="top:860px;font-size:230px;line-height:1">⚖️</div>
- <div class="a cx" data-t="7.36" data-a="stamp" data-d=".3" data-r="-3" style="top:1150px"><div style="background:#FFE27A;color:#2A2724;font:900 78px Fraunces;padding:18px 44px;border-radius:20px;white-space:nowrap;box-shadow:0 10px 0 rgba(0,0,0,.15)">AYNAN BIR XIL!</div></div>
+ <div id="tex" class="arabic" style="position:absolute;inset:0;opacity:.09;font-size:46px;line-height:96px;color:#E9C772;white-space:nowrap;overflow:hidden;padding-top:40px">{'<br>'.join(['بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ۝ الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ۝ الرَّحْمَٰنِ الرَّحِيمِ ۝ مَالِكِ يَوْمِ الدِّينِ ۝ إِيَّاكَ نَعْبُدُ']*20)}</div>
+ <div id="scan" style="position:absolute;left:0;width:1080px;height:220px;top:-300px;background:linear-gradient(180deg,rgba(233,199,114,0),rgba(233,199,114,.16) 48%,rgba(255,240,200,.55) 50%,rgba(233,199,114,.16) 52%,rgba(233,199,114,0));mix-blend-mode:screen"></div>
+ <div class="a cx cap" data-t="0.05" data-a="wide" data-ls=".42" style="top:300px">Qur’on shifrlari · III</div>
+ {rule(0.3,350)}
+ {kw([('Qur’ondagi',0.07,False),('har',0.72,True),('bir',1.04,True),('so‘z',1.2,True)],100,430)}
+ {kw([('sanab',1.6,False),('chiqildi',1.88,False)],100,545)}
+ <div class="a cx cap" data-t="2.8" data-a="blur" style="top:760px;color:#9C8E74">Natija</div>
+ <div class="a cx it g glow" data-t="3.28" data-a="blur" data-d=".7" style="top:800px;font-size:96px;white-space:nowrap">hayratlanarli</div>
+ <div class="a cx" data-t="5.6" data-a="none" style="top:960px"><svg width="300" height="200" viewBox="0 0 300 200"><g fill="none" stroke="#E9C772" stroke-width="3" stroke-linecap="round"><path class="dr" data-t="5.6" data-d=".5" d="M150 20V180M100 186H200"/><path class="dr" data-t="5.9" data-d=".5" d="M40 40H260"/><path class="dr" data-t="6.2" data-d=".5" d="M40 40L10 110M40 40L70 110M0 110Q40 140 80 110M260 40L230 110M260 40L290 110M220 110Q260 140 300 110"/></g></svg></div>
+ <div class="a cx h g glow" data-t="7.36" data-a="zoom" data-d=".6" style="top:1190px;font-size:120px;white-space:nowrap">aynan bir xil</div>
 </section>
 <section class="scene" data-s="9.55" data-e="16.45">
- <div class="a cx wt" data-t="9.6" data-a="pop" style="top:250px;text-align:center"><div class="big count" data-t="9.65" data-d="2.0" data-from="0" data-to="6236" style="color:#FFE27A">0</div><div style="font:900 50px Nunito;margin-top:6px">oyat</div></div>
- <canvas id="grid" class="a cx" data-t="9.6" data-a="fade" data-d=".3" width="890" height="720" style="top:570px"></canvas>
- <div class="a cx" data-t="12.2" data-a="pop" style="top:1340px"><div class="pill" style="color:#3A2BFF">📖 butun Qur’on — bitta ekranda</div></div>
- <div class="a cx" data-t="14.6" data-a="stamp" data-d=".3" data-o="16.3" style="top:860px"><div class="pill" style="font-size:48px;color:#3A2BFF;border:6px solid #FFE27A">🟡 1 nuqta = 1 oyat</div></div>
+ <div class="a cx h g glow count" data-t="9.65" data-d="2.0" data-from="0" data-to="6236" style="top:250px;font-size:250px;line-height:1">0</div>
+ <div class="a cx cap" data-t="9.9" data-a="wide" data-ls=".42" style="top:520px">oyat</div>
+ <canvas id="grid" width="900" height="720" style="position:absolute;left:90px;top:610px"></canvas>
+ <div class="a cx it" data-t="12.2" data-a="blur" style="top:1355px;font-size:60px;white-space:nowrap">butun Qur’on — <span class="g">bitta ekranda</span></div>
+ <div class="a cx" data-t="14.75" data-a="zoom" data-o="16.3" style="top:1010px"><div class="glass mont" style="padding:20px 34px;font-size:40px;white-space:nowrap;background:rgba(5,6,10,.8)">1 nuqta <span class="g">=</span> 1 oyat</div></div>
 </section>
 <section class="scene" data-s="16.45" data-e="24.05">
- <div class="a cx" data-t="16.5" data-a="none" style="top:300px">{scale}</div>
- <div class="a cx" data-t="21.9" data-a="stamp" data-d=".3" data-r="-2" style="top:1110px"><div style="background:#fff;color:#00A58F;font:900 72px Fraunces;padding:18px 44px;border-radius:20px;white-space:nowrap;box-shadow:0 10px 0 rgba(0,0,0,.12)">115 = 115 ✓</div></div>
- <div class="a cx wt" data-t="22.6" data-a="up" style="top:1270px;font:900 52px Nunito;white-space:nowrap">tarozi to‘liq muvozanatda</div>
+ <div class="a cx" data-t="16.5" data-a="none" style="top:290px">{scale}</div>
+ <div class="a cx h g glow" data-t="21.9" data-a="zoom" data-d=".55" style="top:1060px;font-size:130px;white-space:nowrap">115 = 115</div>
+ <div class="a cx it" data-t="22.6" data-a="blur" style="top:1230px;font-size:60px;white-space:nowrap">tarozi to‘liq muvozanatda</div>
 </section>
 <section class="scene" data-s="24.05" data-e="32.55">
- <div class="a cx wt" data-t="24.1" data-a="up" style="top:270px;font:900 50px Nunito;white-space:nowrap">Alloh Payg‘ambarimizga:</div>
- <div class="a" data-t="25.45" data-a="left" data-r="-2" style="left:70px;top:400px"><div class="tile" style="background:#fff;color:#FF6A00;width:440px;height:520px">
-  <div style="font:700 80px Amiri">قُلْ</div><div style="font:900 64px Nunito">«Ayt!»</div>
-  <div class="count" data-t="26.24" data-d="1.2" data-from="0" data-to="332" style="font:900 150px Fraunces;line-height:1.05;color:#2A2724">0</div><div style="font:800 34px Nunito;color:#8A847A">marta</div></div></div>
- <div class="a" data-t="29.25" data-a="right" data-r="2" style="left:570px;top:400px"><div class="tile" style="background:#fff;color:#FF6A00;width:440px;height:520px">
-  <div style="font:700 80px Amiri">قَالُوا</div><div style="font:900 64px Nunito">«Dedilar»</div>
-  <div class="count" data-t="30.9" data-d="1.2" data-from="0" data-to="332" style="font:900 150px Fraunces;line-height:1.05;color:#2A2724">0</div><div style="font:800 34px Nunito;color:#8A847A">marta</div></div></div>
- <div class="a cx" data-t="31.9" data-a="stamp" data-d=".3" style="top:590px"><div style="width:130px;height:130px;border-radius:50%;background:#FFE27A;display:flex;align-items:center;justify-content:center;font:900 100px Nunito;color:#2A2724;box-shadow:0 8px 0 rgba(0,0,0,.15)">=</div></div>
- <div class="a cx wt" data-t="28.5" data-a="up" style="top:1000px;font:900 40px Nunito;white-space:nowrap;opacity:.9">buyruq ↔ javob</div>
+ <div class="a cx cap" data-t="24.1" data-a="wide" data-ls=".42" style="top:290px">Alloh Payg‘ambarimizga</div>
+ {rule(24.3,340)}
+ <svg class="a" data-t="31.7" data-a="none" style="left:0;top:600px" width="1080" height="200"><path class="dr" data-t="31.7" data-d=".5" d="M500 100H580" stroke="#E9C772" stroke-width="3"/></svg>
+ <div class="a" data-t="25.45" data-a="rise" style="left:70px;top:420px"><div class="glass" style="width:440px;height:560px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">
+  <div class="ruq g glow" style="font-size:150px;line-height:1.1">قل</div><div class="it" style="font-size:66px">«Ayt!»</div>
+  <div class="h g count" data-t="26.24" data-d="1.2" data-from="0" data-to="332" style="font-size:170px;line-height:1">0</div><div class="cap" style="font-size:22px">marta</div></div></div>
+ <div class="a" data-t="29.25" data-a="rise" style="left:570px;top:420px"><div class="glass" style="width:440px;height:560px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px">
+  <div class="ruq g glow" style="font-size:150px;line-height:1.1">قالوا</div><div class="it" style="font-size:66px">«Dedilar»</div>
+  <div class="h g count" data-t="30.9" data-d="1.2" data-from="0" data-to="332" style="font-size:170px;line-height:1">0</div><div class="cap" style="font-size:22px">marta</div></div></div>
+ <div class="a cx" data-t="31.85" data-a="zoom" style="top:640px"><div style="width:120px;height:120px;border-radius:50%;background:#05060A;border:3px solid #E9C772;box-shadow:0 0 40px rgba(233,199,114,.6);display:flex;align-items:center;justify-content:center"><span class="h g" style="font-size:96px;line-height:1">=</span></div></div>
+ <div class="a cx it" data-t="28.4" data-a="blur" style="top:1050px;font-size:56px;white-space:nowrap;color:#BFAF90">buyruq va javob</div>
 </section>
 <section class="scene" data-s="32.55" data-e="44.15">
- <div class="a cx wt" data-t="32.6" data-a="up" style="top:270px;font:900 48px Nunito;white-space:nowrap">Eng ko‘p tilga olingan payg‘ambarlar</div>
- {brow(34.45,'Muso a.s.',136,470,'#FFE27A',420)}
- {brow(36.5,'Ibrohim a.s.',69,238,'rgba(255,255,255,.7)',560,True)}
- {brow(36.9,'Nuh a.s.',43,149,'rgba(255,255,255,.7)',700,True)}
- {brow(37.55,'Iso a.s.',25,86,'#FF7AC8',840)}
- {brow(39.9,'Odam a.s.',25,86,'#FF7AC8',980)}
- <div class="a" data-t="42.2" data-a="pop" style="left:700px;top:850px;width:24px;height:200px;border:8px solid #FFE27A;border-left:none;border-radius:0 20px 20px 0"></div>
- <div class="a" data-t="42.3" data-a="pop" style="left:745px;top:905px"><div class="pill" style="font-size:48px;color:#5B4BFF">25 = 25</div></div>
- <div class="a cx" data-t="43.0" data-a="stamp" data-d=".3" data-r="-3" style="top:1170px"><div style="background:#fff;color:#5B4BFF;font:900 96px Fraunces;padding:16px 50px;border-radius:24px;white-space:nowrap;box-shadow:0 10px 0 rgba(0,0,0,.15)">Tasodifmi?</div></div>
+ <div class="a cx it" data-t="32.6" data-a="blur" style="top:270px;font-size:66px;white-space:nowrap">Eng ko‘p tilga olingan <span class="g">payg‘ambarlar</span></div>
+ {rule(32.9,370)}
+ {brow(34.45,'Muso a.s.',136,440,'#E9C772',440)}
+ {brow(36.5,'Ibrohim a.s.',69,223,'#BFAF90',565,True)}
+ {brow(36.9,'Nuh a.s.',43,139,'#BFAF90',690,True)}
+ {brow(37.55,'Iso a.s.',25,81,'#6FE0B8',815)}
+ {brow(39.9,'Odam a.s.',25,81,'#6FE0B8',940)}
+ <svg class="a" data-t="42.2" data-a="none" style="left:620px;top:820px" width="60" height="230"><path class="dr" data-t="42.2" data-d=".45" d="M4 10H30V220H4" fill="none" stroke="#6FE0B8" stroke-width="3"/></svg>
+ <div class="a" data-t="42.4" data-a="blur" style="left:690px;top:880px"><div class="glass h" style="padding:14px 30px;font-size:64px;white-space:nowrap;color:#6FE0B8;border-color:rgba(111,224,184,.5)">25 = 25</div></div>
+ <div class="a cx it g glow" data-t="43.0" data-a="zoom" data-d=".6" style="top:1160px;font-size:140px;white-space:nowrap">Tasodifmi?</div>
 </section>
 <section class="scene" data-s="44.15" data-e="55.3">
- <div class="a cx" data-t="44.2" data-a="pop" data-r="-.6" style="top:270px"><div class="ayah2">
-  <div class="caps" style="color:#8A3CFF">Oli Imron surasi · 59-oyat</div>
-  <div class="arabic" style="font-size:56px;line-height:1.8;margin-top:24px;color:#8A3CFF">إِنَّ مَثَلَ عِيسَىٰ عِندَ اللَّهِ كَمَثَلِ آدَمَ</div>
-  <div class="serif" style="font-size:50px;line-height:1.25;margin-top:10px;color:#2A2724">{rv([('«Alloh',46.34),('huzurida',46.64),('Isoning',47.36,'t-terra'),('misoli',48.04),('Odamning',48.64,'t-terra'),('misoli',49.24),('kabidir»',49.56)])}</div></div></div>
- <div class="a" data-t="50.44" data-a="left" style="left:90px;top:760px"><div class="pill" style="font-size:46px;color:#2A2724">Odam a.s. — ota <span class="a x" data-t="51.2" data-a="stamp" data-d=".25" style="position:relative">✕</span> ona <span class="a x" data-t="52.08" data-a="stamp" data-d=".25" style="position:relative">✕</span></div></div>
- <div class="a" data-t="53.2" data-a="left" style="left:90px;top:900px"><div class="pill" style="font-size:46px;color:#2A2724">Iso a.s. — ota <span class="a x" data-t="54.08" data-a="stamp" data-d=".25" style="position:relative">✕</span></div></div>
- <div class="a cx wt" data-t="54.5" data-a="fade" style="top:1080px"><div class="hand" style="font-size:66px;white-space:nowrap">ikkisi ham — mo‘jizaviy yaratilish</div></div>
+ {card(44.2,'Oli Imron surasi · 59-oyat','إِنَّ مَثَلَ عِيسَىٰ عِندَ اللَّهِ كَمَثَلِ آدَمَ',rv([('«Alloh',46.34),('huzurida',46.64),('Isoning',47.36,'t-terra'),('misoli',48.04),('Odamning',48.64,'t-terra'),('misoli',49.24),('kabidir»',49.56)]),270,64,56)}
+ <div class="a" data-t="50.44" data-a="rise" style="left:110px;top:800px;display:flex;align-items:baseline;gap:24px"><div class="h" style="font-size:62px;white-space:nowrap">Odam a.s.</div><div class="mont" style="font-size:38px;color:#BFAF90;white-space:nowrap">ota <span class="a x" data-t="51.2" data-a="zoom" data-d=".3" style="position:relative">✕</span> &nbsp;ona <span class="a x" data-t="52.08" data-a="zoom" data-d=".3" style="position:relative">✕</span></div></div>
+ <div class="a" data-t="53.2" data-a="rise" style="left:110px;top:920px;display:flex;align-items:baseline;gap:24px"><div class="h" style="font-size:62px;white-space:nowrap">Iso a.s.</div><div class="mont" style="font-size:38px;color:#BFAF90;white-space:nowrap">ota <span class="a x" data-t="54.08" data-a="zoom" data-d=".3" style="position:relative">✕</span></div></div>
+ <div class="a cx it g glow" data-t="54.4" data-a="blur" style="top:1090px;font-size:64px;white-space:nowrap">ikkisi ham — mo‘jizaviy yaratilish</div>
 </section>
 <section class="scene" data-s="55.3" data-e="62.93">
+ <svg class="a" data-t="55.35" data-a="none" style="left:0;top:100px" width="1080" height="1080"><circle class="dr" data-t="55.4" data-d="1.4" cx="540" cy="540" r="300" fill="none" stroke="rgba(233,199,114,.45)" stroke-width="2" transform="rotate(-90 540 540)"/><circle class="dr" data-t="55.6" data-d="1.4" cx="540" cy="540" r="225" fill="none" stroke="rgba(233,199,114,.18)" stroke-width="1.5"/></svg>
  {ring}
- <div class="a" data-t="55.35" data-a="pop" style="left:340px;top:420px;width:400px;text-align:center"><div class="wt" style="font:900 52px Nunito">«Oy» — <span style="font:700 52px Amiri;color:#FFE27A">شَهْر</span></div>
-  <div class="big count wt" data-t="57.1" data-d=".9" data-from="0" data-to="12" style="color:#FFE27A;font-size:180px">0</div><div class="wt" style="font:800 34px Nunito;opacity:.85">marta · birlik shaklda</div></div>
- <div class="a cx" data-t="58.2" data-a="up" style="top:920px"><div class="ayah2" style="padding:34px 40px">
-  <div class="caps" style="color:#3A2BFF">Tavba surasi · 36-oyat</div>
-  <div class="arabic" style="font-size:50px;line-height:1.7;margin-top:22px;color:#3A2BFF">إِنَّ عِدَّةَ الشُّهُورِ عِندَ اللَّهِ اثْنَا عَشَرَ شَهْرًا</div>
-  <div class="serif" style="font-size:48px;line-height:1.2;margin-top:6px;color:#2A2724">{rv([('«Alloh',59.78),('huzurida',60.04),('oylarning',60.8),('soni',61.36),('o‘n',61.84,'t-terra'),('ikkitadir»',62.0,'t-terra')])}</div></div></div>
+ <div class="a cx" data-t="55.35" data-a="blur" style="top:470px;text-align:center"><div class="cap">«Oy» · <span class="ruq" style="font-size:44px;letter-spacing:0;color:#E9C772">شهر</span></div></div>
+ <div class="a cx h g glow count" data-t="57.1" data-d=".9" data-from="0" data-to="12" style="top:530px;font-size:230px;line-height:1">0</div>
+ <div class="a cx cap" data-t="56.0" data-a="blur" style="top:780px;font-size:20px;color:#9C8E74">birlik shaklda</div>
+ {card(58.2,'Tavba surasi · 36-oyat','إِنَّ عِدَّةَ الشُّهُورِ عِندَ اللَّهِ اثْنَا عَشَرَ شَهْرًا',rv([('«Alloh',59.78),('huzurida',60.04),('oylarning',60.8),('soni',61.36),('o‘n',61.84,'t-terra'),('ikkitadir»',62.0,'t-terra')]),1000,52,50)}
 </section>
 <section class="scene" data-s="62.93" data-e="76.92">
- <div class="a cx" data-t="62.98" data-a="pop" data-o="67.95" style="top:330px"><div class="ayah2" style="padding:36px"><div class="serif" style="font-size:62px;line-height:1.15;color:#2A2724">Bu raqamlar — Qur’onning <span style="color:#00A8B5">yagona</span> mo‘jizasi emas</div></div></div>
- <div class="a cx" data-t="66.05" data-a="up" data-o="67.95" style="top:680px"><div class="pill" style="font-size:52px;color:#2D7BFF">💡 lekin ular o‘ylashga chaqiradi</div></div>
- <div class="a cx wt" data-t="64.0" data-a="fade" data-o="67.95" style="top:1100px;width:900px;text-align:center;font:800 30px/1.35 Nunito;opacity:.9">* Sanoq so‘zning qaysi shakli hisoblanishiga qarab farq qilishi mumkin. Manba: Quranic Arabic Corpus</div>
- <div class="a cx" data-t="68.1" data-a="pop" data-r="-.5" style="top:300px"><div class="ayah2">
-  <div class="caps" style="color:#2D7BFF">Niso surasi · 82-oyat</div>
-  <div class="arabic" style="font-size:52px;line-height:1.8;margin-top:28px;color:#2D7BFF">أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ ۚ وَلَوْ كَانَ مِنْ عِندِ غَيْرِ اللَّهِ لَوَجَدُوا فِيهِ اخْتِلَافًا كَثِيرًا</div>
-  <div class="serif" style="font-size:46px;line-height:1.25;margin-top:10px;color:#2A2724">{rv([('«Qur’on',69.26),('haqida',69.64),('o‘ylab',70.03,'t-terra'),('ko‘rmaydilarmi?',70.36,'t-terra'),('Agar',71.64),('u',71.92),('Allohdan',72.16),('boshqa',72.72),('tomondan',73.12),('bo‘lganida,',73.52),('unda',74.6),('ko‘p',74.88),('ziddiyat',75.12,'t-terra'),('topgan',75.6),('bo‘lardilar»',75.96)])}</div></div></div>
+ <div class="rays" id="rays1"></div>
+ {kw([('Bu',62.98,False),('raqamlar',63.16,False),('—',63.5,False),('Qur’onning',63.81,False),('yagona',64.4,True),('mo‘jizasi',64.88,False),('emas',65.56,False)],96,360,'line-height:1.08','67.95')}
+ <div class="a cx it g glow" data-t="66.05" data-a="blur" data-o="67.95" style="top:690px;font-size:70px;white-space:nowrap">lekin ular o‘ylashga chaqiradi</div>
+ <div class="a cx mont" data-t="64.0" data-a="blur" data-o="67.95" style="top:1180px;width:880px;text-align:center;font-size:24px;line-height:1.5;color:#8E8370;letter-spacing:.04em">* Sanoq so‘zning qaysi shakli hisoblanishiga qarab farq qilishi mumkin. Manba: Quranic Arabic Corpus</div>
+ {card(68.1,'Niso surasi · 82-oyat','أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ ۚ وَلَوْ كَانَ مِنْ عِندِ غَيْرِ اللَّهِ لَوَجَدُوا فِيهِ اخْتِلَافًا كَثِيرًا',rv([('«Qur’on',69.26),('haqida',69.64),('o‘ylab',70.03,'t-terra'),('ko‘rmaydilarmi?',70.36,'t-terra'),('Agar',71.64),('u',71.92),('Allohdan',72.16),('boshqa',72.72),('tomondan',73.12),('bo‘lganida,',73.52),('unda',74.6),('ko‘p',74.88),('ziddiyat',75.12,'t-terra'),('topgan',75.6),('bo‘lardilar»',75.96)]),300,52,50)}
 </section>
 <section class="scene" data-s="76.92" data-e="85.25">
- <div class="a cx wt" data-t="76.97" data-a="pop" style="top:260px;text-align:center"><div class="serif" style="font-size:80px;line-height:1.05">Sizningcha,<br>qaysi biri? 🤔</div></div>
- <div class="a" data-t="79.56" data-a="pop" data-r="-2" style="left:85px;top:520px"><div class="tile" style="background:#00B8A9"><div style="font:900 120px Fraunces;line-height:1">115</div><div style="font:800 34px Nunito">dunyo = oxirat</div></div></div>
- <div class="a" data-t="80.64" data-a="pop" data-r="2" style="left:565px;top:520px"><div class="tile" style="background:#FF6A00"><div style="font:900 120px Fraunces;line-height:1">332</div><div style="font:800 34px Nunito">«ayt» = «dedilar»</div></div></div>
- <div class="a" data-t="81.89" data-a="pop" data-r="2" style="left:85px;top:860px"><div class="tile" style="background:#5B4BFF"><div style="font:900 120px Fraunces;line-height:1">25</div><div style="font:800 34px Nunito">Iso = Odam</div></div></div>
- <div class="a" data-t="83.12" data-a="pop" data-r="-2" style="left:565px;top:860px"><div class="tile" style="background:#0B1650"><div style="font:900 120px Fraunces;line-height:1;color:#FFD84A">12</div><div style="font:800 34px Nunito">oylar soni</div></div></div>
- <div class="a cx" data-t="83.96" data-a="up" style="top:1220px"><div class="pill" style="font-size:46px;color:#FF3D8B">💬 Izohlarda yozing!</div></div>
+ <div class="a cx it" data-t="76.97" data-a="blur" style="top:250px;font-size:84px;white-space:nowrap">Sizningcha, <span class="g">qaysi biri?</span></div>
+ {rule(77.3,370)}
+'''
+tiles=[(79.56,85,450,'115','dunyo = oxirat'),(80.64,555,450,'332','«ayt» = «dedilar»'),(81.89,85,800,'25','Iso = Odam'),(83.12,555,800,'12','oylar soni')]
+for t,x,y,n,cpt in tiles:
+    s+=f'<div class="a" data-t="{t}" data-a="zoom" data-d=".5" style="left:{x}px;top:{y}px"><div class="glass" style="width:440px;height:310px;display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="h g glow" style="font-size:150px;line-height:1">{n}</div><div class="cap" style="font-size:20px;letter-spacing:.25em;margin-top:10px;color:#BFAF90">{cpt}</div></div></div>\n'
+s+='''<div class="a cx" data-t="83.96" data-a="rise" style="top:1180px"><div class="glass mont" style="padding:20px 38px;font-size:40px;white-space:nowrap">💬 Izohlarda yozing</div></div>
 </section>
 '''
-extra=f'''<div class="a cx" data-t="85.3" data-a="up" data-o="91.6" style="top:300px;font:900 54px Nunito;color:var(--green);white-space:nowrap">Har kuni — birgalikda</div>
-<div class="a cx" data-t="91.7" data-a="pop" style="top:290px;display:flex;gap:22px"><div class="chip" style="font-size:40px">📌 Saqlab qo‘ying</div><div class="a chip" data-t="92.5" data-a="pop" style="position:relative;font-size:40px">📤 Yaqiningizga yuboring</div></div>
-<div class="a cx" data-t="88.85" data-a="pop" style="top:1220px"><div class="chip" style="font-size:42px;white-space:nowrap;border:4px solid var(--terra)">💬 Izohlarga <span class="t-terra" style="font-size:56px">«+»</span> qoldiring</div></div>
-<div class="a hand cx" data-t="90.4" data-a="fade" style="top:1335px;font-size:48px;color:#8A847A">yoki</div>
+extra=f'''<div class="a cx it g glow" data-t="85.3" data-a="blur" data-o="91.6" style="top:290px;font-size:64px;white-space:nowrap">Har kuni — birgalikda</div>
+<div class="a cx" data-t="91.7" data-a="rise" style="top:290px;display:flex;gap:22px"><div class="chip" style="font-size:36px">📌 Saqlab qo‘ying</div><div class="a chip" data-t="92.5" data-a="rise" style="position:relative;font-size:36px">📤 Yaqiningizga yuboring</div></div>
+<div class="a cx" data-t="88.85" data-a="zoom" style="top:1220px"><div class="chip" style="font-size:38px;white-space:nowrap;border:2px solid #E9C772">💬 Izohlarga <span class="g" style="font-size:54px">«+»</span> qoldiring</div></div>
+<div class="a hand cx" data-t="90.4" data-a="blur" style="top:1330px;font-size:46px;color:#9C8E74">yoki</div>
 '''
 c=C.cta(tas=85.4,zikr=87.25,extra=extra,havola=90.75,btn=91.9)
-c=c.replace('style="top:1250px"><div class="chip"','style="top:1400px"><div class="chip"').replace('style="top:1400px"><div style="background:var(--gold)','style="top:1530px"><div style="background:var(--gold)').replace('top:1560px;font:700','top:1690px;font:700')
-c=c.replace('style="top:1070px"><div style="background:var(--terra)','style="top:1060px"><div style="background:var(--terra)')
+c=c.replace('style="top:1250px"><div class="chip"','style="top:1395px"><div class="chip"').replace('style="top:1400px"><div style="background:var(--gold)','style="top:1520px"><div style="background:var(--gold)').replace('top:1560px;font:700','top:1680px;font:700')
+c=c.replace('style="top:1070px"><div style="background:var(--terra);color:#fff;font:900 84px Fraunces;padding:22px 46px;border-radius:8px;white-space:nowrap;box-shadow:0 12px 26px rgba(150,60,40,.25)">ZIKR MARAFONI',
+ 'style="top:1060px"><div class="h g glow" style="font-size:118px;white-space:nowrap;letter-spacing:.04em">Zikr marafoni')
+c=c.replace('background:var(--gold);font:900 56px Nunito;padding:28px 56px;border-radius:60px;white-space:nowrap;box-shadow:0 8px 0 #B9812A,0 18px 30px rgba(120,80,20,.25)',
+ 'background:linear-gradient(180deg,#F8E3A6,#D4AF5F 55%,#B48A3C);color:#1A1408;font:700 50px Mont;padding:28px 60px;border-radius:60px;white-space:nowrap;box-shadow:0 0 40px rgba(233,199,114,.45),0 18px 30px rgba(0,0,0,.4)')
+c=c.replace('color:#7D776D;white-space:nowrap">Telegram','color:#9C8E74;white-space:nowrap">Telegram').replace('font:700 30px Nunito','font:600 28px Mont')
+c=c.replace('style="font-size:130px;line-height:1">0</div><div style="font:800 28px Nunito;color:#8A847A">/ 33</div>','style="font-size:140px;line-height:1;color:#F3E7CF">0</div><div style="font:600 24px Mont;color:#9C8E74">/ 33</div>')
+TAS=C.TASBEH.replace("'#E2A63A':'#2E6B5B'","'#FFF1C4':'#D4AF5F'").replace('data-off="#D9D1C3"','data-off="rgba(233,199,114,.14)"').replace('stroke="#C4553B"','stroke="#E9C772"')
 CUSTOM='''<script>(function(){
-const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),eo=p=>1-Math.pow(1-p,3);
-const cv=document.getElementById('grid'),cx=cv.getContext('2d');const COLS=88,N=6236,SP=10;
-const svs=[...document.querySelectorAll('.sv')],gws=[...document.querySelectorAll('.gw')];
-const beam=document.getElementById('beam'),pL=document.getElementById('panL'),pR=document.getElementById('panR');
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),eo=p=>1-Math.pow(1-p,3),ei=p=>p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+let seed=7;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};
+const fx=document.getElementById('fx'),f=fx.getContext('2d');
+const P=[...Array(160)].map(()=>({x:rnd()*1080,y:rnd()*1920,s:.6+rnd()*2.2,v:8+rnd()*26,a:.15+rnd()*.5,ph:rnd()*6.28}));
+const S=[...Array(220)].map(()=>({x:rnd()*1080,y:rnd()*1300,s:.5+rnd()*1.6,ph:rnd()*6.28}));
+const TINT=[[-9,[40,30,10]],[9.55,[14,22,60]],[16.45,[6,42,36]],[24.05,[46,28,8]],[32.55,[14,24,64]],[44.15,[40,18,52]],[55.3,[6,12,46]],[62.93,[8,34,44]],[76.92,[40,28,10]],[85.25,[42,30,12]]];
+function tint(t){let i=0;while(i<TINT.length-1&&t>=TINT[i+1][0])i++;const a=TINT[i][1];if(i==TINT.length-1)return a;const b=TINT[i+1][1],k=cl((t-(TINT[i+1][0]-.5))/1);return a.map((v,j)=>v+(b[j]-v)*k)}
+const cv=document.getElementById('grid'),gx=cv.getContext('2d');const COLS=88,N=6236,SP=10;
+const D=[...Array(N)].map((_,i)=>{const r=Math.floor(i/COLS),c=i%COLS;const an=rnd()*6.28,rr=500+rnd()*700;return {tx:6+c*SP,ty:6+r*SP,sx:450+Math.cos(an)*rr,sy:360+Math.sin(an)*rr,d:(r/71)*1.3+rnd()*.35,b:rnd()}});
+const svs=[...document.querySelectorAll('.sv')],gws=[...document.querySelectorAll('.gw')],scenes=[...document.querySelectorAll('.scene')];
+const beam=document.getElementById('beam'),pL=document.getElementById('panL'),pR=document.getElementById('panR'),rip=document.getElementById('rip');
+const scan=document.getElementById('scan'),tex=document.getElementById('tex'),star=document.getElementById('star'),rays=document.getElementById('rays1'),ban=document.getElementById('banner');
 const R=window.render;
 window.render=function(t){R(t);
- // dot grid
- const n=Math.floor(N*eo(cl((t-9.65)/2.0)));cx.clearRect(0,0,900,760);
- for(let i=0;i<n;i++){const r=Math.floor(i/COLS),c=i%COLS;cx.fillStyle=`hsl(${(r*4+c*1.2)%360},95%,72%)`;cx.beginPath();cx.arc(6+c*SP,6+r*SP,3.6,0,6.283);cx.fill();}
- if(t>14.6){const k=cl((t-14.6)/.4),i=3100,r=Math.floor(i/COLS),c=i%COLS,x=6+c*SP,y=6+r*SP;cx.fillStyle='#FFE27A';cx.beginPath();cx.arc(x,y,4+14*eo(k),0,6.283);cx.fill();cx.strokeStyle='#fff';cx.lineWidth=4;cx.stroke();}
+ const [r,g,b]=tint(t);const gr=f.createRadialGradient(540,820,40,540,820,1250);gr.addColorStop(0,`rgb(${r|0},${g|0},${b|0})`);gr.addColorStop(1,'#04050A');f.fillStyle=gr;f.fillRect(0,0,1080,1920);
+ const night=cl((t-55.0)/.6)*(1-cl((t-62.7)/.6));
+ if(night>0)S.forEach(s=>{f.globalAlpha=night*(.35+.65*Math.abs(Math.sin(t*1.3+s.ph)));f.fillStyle='#FFF6DA';f.beginPath();f.arc(s.x,s.y,s.s,0,6.283);f.fill();});
+ P.forEach(p=>{const y=((p.y-t*p.v)%1920+1920)%1920,x=p.x+Math.sin(t*.4+p.ph)*20;f.globalAlpha=p.a*(.6+.4*Math.sin(t*2+p.ph));f.fillStyle='#E9C772';f.beginPath();f.arc(x,y,p.s,0,6.283);f.fill();});
+ f.globalAlpha=1;
+ star.style.transform=`rotate(${t*2.2}deg) scale(${1+.04*Math.sin(t*.3)})`;
+ scenes.forEach(sc=>{const s=+sc.dataset.s,e=Math.min(+sc.dataset.e,s+14);const k=cl((t-s)/(e-s));sc.style.transform=`scale(${1+.035*k})`;});
+ if(scan){const k=cl(t/2.9);scan.style.top=(-260+k*2300)+'px';tex.style.transform=`translateX(${-t*14}px)`;}
+ // grid
+ if(t>9.4&&t<16.6){gx.clearRect(0,0,900,720);const T=t-9.65;
+  for(let i=0;i<N;i++){const d=D[i],p=eo(cl((T-d.d)/.75));if(p<=0)continue;const x=d.sx+(d.tx-d.sx)*p,y=d.sy+(d.ty-d.sy)*p;
+   const sh=p>=1?(.55+.45*Math.abs(Math.sin(t*1.7+d.b*40))):1;gx.globalAlpha=p*sh;gx.fillStyle=d.b>.92?'#FFF1C4':'#D4AF5F';gx.fillRect(x-2.6,y-2.6,5.2,5.2);}
+  gx.globalAlpha=1;
+  if(t>14.6){const k=eo(cl((t-14.6)/.5)),d=D[3150];gx.strokeStyle='#FFF1C4';gx.lineWidth=3;gx.fillStyle='#FFF1C4';gx.shadowColor='#E9C772';gx.shadowBlur=30;
+   gx.beginPath();gx.arc(d.tx,d.ty,5+9*k,0,6.283);gx.fill();gx.beginPath();gx.arc(d.tx,d.ty,10+48*k,0,6.283);gx.globalAlpha=1-k*.4;gx.stroke();gx.shadowBlur=0;gx.globalAlpha=1;}}
  // scale
- let a=0;const p1=eo(cl((t-17.5)/.8));a=-9*p1;
- if(t>20.45){const q=cl((t-20.45)/1.2);a=-9*(1-q)+Math.sin(q*Math.PI*3)*4*(1-q);}
- const rad=a*Math.PI/180;beam.setAttribute('transform',`rotate(${a} 400 120)`);
- const ex=(d)=>[400+d*Math.cos(rad),120+d*Math.sin(rad)];const L=ex(-300),Rr=ex(300);
- pL.setAttribute('transform',`translate(${L[0]} ${L[1]})`);pR.setAttribute('transform',`translate(${Rr[0]} ${Rr[1]})`);
- svs.forEach(e=>e.style.opacity=cl((t-+e.dataset.t)/.3));
+ let a=-9*eo(cl((t-17.5)/.8));if(t>20.45){const q=cl((t-20.45)/1.4);a=-9*(1-q)+Math.sin(q*Math.PI*3)*4*(1-q);}
+ const rad=a*Math.PI/180;beam.setAttribute('transform',`rotate(${a} 400 140)`);
+ pL.setAttribute('transform',`translate(${400-300*Math.cos(rad)} ${140-300*Math.sin(rad)})`);pR.setAttribute('transform',`translate(${400+300*Math.cos(rad)} ${140+300*Math.sin(rad)})`);
+ const rq=cl((t-21.85)/1.2);rip.setAttribute('r',20+260*eo(rq));rip.setAttribute('opacity',rq>0&&rq<1?(1-rq):0);
+ svs.forEach(e=>e.style.opacity=cl((t-+e.dataset.t)/.35));
  gws.forEach(e=>e.style.transform=`scaleX(${eo(cl((t-+e.dataset.t)/+(e.dataset.d||.8)))})`);
+ if(rays)rays.style.transform=`rotate(${t*3}deg)`;
+ if(ban){ban.style.transform=ban.style.transform.replace(/rotate\\([^)]*\\)/,'');}
 };})();</script>'''
 s+=c+'''
-<div id="sub" data-hide="85.2"><div id="subbox"></div></div></div>'''+CUSTOM+C.TASBEH+'</body></html>'
-open('/home/claude/reel17/index.html','w').write(HEAD+b+s)
+<div id="sub" data-hide="85.2"><div id="subbox"></div></div></div>'''+CUSTOM+TAS+'</body></html>'
+open('/home/claude/reel17/index.html','w').write(HEAD+BG+s)
 print('ok')

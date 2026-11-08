@@ -22,7 +22,7 @@
 
   function anim(el,t){
     const p=clamp((t-el.t)/el.d);
-    let op=1,tx=0,ty=0,sc=1,rot=el.r;
+    let op=1,tx=0,ty=0,sc=1,rot=el.r,bl=0,ls=0;
     switch(el.a){
       case 'pop': op=clamp(p*2.5); sc=.55+.45*easeOutBack(p); break;
       case 'up': op=clamp(p*1.6); ty=(1-easeOutCubic(p))*50; break;
@@ -33,11 +33,15 @@
       case 'stamp': op=clamp(p*3); sc=1+ (1-easeOutCubic(p))*0.9; break;
       case 'drop': op=clamp(p*3); ty=-(1-easeOutBack(p))*120; break;
       case 'none': op=1; break;
+      case 'blur': op=clamp(p*1.4); sc=1.08-.08*easeOutCubic(p); bl=(1-easeOutCubic(p))*18; break;
+      case 'zoom': op=clamp(p*2); sc=1.55-.55*easeOutCubic(p); bl=(1-easeOutCubic(p))*14; break;
+      case 'rise': op=clamp(p*1.5); ty=(1-easeOutCubic(p))*46; bl=(1-easeOutCubic(p))*8; break;
+      case 'wide': op=clamp(p*1.5); sc=.92+.08*easeOutCubic(p); ls=(1-easeOutCubic(p)); bl=(1-easeOutCubic(p))*10; break;
     }
     if(t<el.t) op=0;
-    if(el.o!==null){ const q=clamp((t-el.o)/.3); op*=1-q; sc*=1-.12*q; }
+    if(el.o!==null){ const q=clamp((t-el.o)/.35); op*=1-q; sc*=1+.06*q; bl+=q*12; }
     if(el.f){ ty+=Math.sin(t*1.5+el.ph)*el.f; rot+=Math.sin(t*1.1+el.ph)*el.f*.12; }
-    el.n.style.opacity=op;
+    el.n.style.opacity=op; el.n.style.filter=bl>.05?`blur(${bl.toFixed(1)}px)`:''; if(el.a==='wide') el.n.style.letterSpacing=((+(el.n.dataset.ls||0))+ls*0.5).toFixed(3)+'em';
     el.n.style.transform=(el.cx?'translateX(-50%) ':'')+`translate(${tx}px,${ty}px) rotate(${rot}deg) scale(${sc})`;
   }
 
