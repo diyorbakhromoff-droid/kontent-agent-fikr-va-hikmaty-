@@ -3,7 +3,7 @@ import cta as C
 exec(open('/home/claude/build4.py').read().split('# ---------- reel004 ----------')[0].split('import cta as C')[1])
 C.SCENE_S='78.3'
 b=bgs([(-1,11.5,'#E9E2D6'),(11.5,20.0,'#F3E9CF'),(20.0,25.1,'#DAE2E9'),(25.1,40.6,'#E5DDEB'),(40.6,46.2,'#F1E6D6'),(46.2,56.2,'#DCE6DA'),(56.2,69.5,'#F3E9CF'),(69.5,78.3,'#F6E1D3'),(78.3,999,'#F1E6D6')])
-grave='''<svg width="{w}" height="{h}" viewBox="0 0 120 150"><path d="M20 130V60a40 40 0 0 1 80 0v70z" fill="{c}"/><path d="M60 50v44M44 66h32" stroke="#FBF7EE" stroke-width="7" stroke-linecap="round"/><rect x="4" y="128" width="112" height="16" rx="6" fill="#8C7A62"/></svg>'''
+grave='''<svg width="{w}" height="{h}" viewBox="0 0 120 150"><path d="M20 130V60a40 40 0 0 1 80 0v70z" fill="{c}"/><path d="M68 50a24 24 0 1 0 0 46a19 19 0 1 1 0-46z" fill="#FBF7EE"/><rect x="4" y="128" width="112" height="16" rx="6" fill="#8C7A62"/></svg>'''
 house='''<svg width="{w}" height="{h}" viewBox="0 0 120 110"><path d="M10 52L60 10l50 42" fill="none" stroke="#C4553B" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><rect x="24" y="48" width="72" height="56" fill="#2E6B5B"/><rect x="50" y="68" width="20" height="36" fill="#E2A63A"/></svg>'''
 s=f'''
 <div id="banner" data-s="11.5" data-e="78.1">Qabr azobiga nima sabab bo‘ladi?</div>
