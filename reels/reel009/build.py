@@ -1,0 +1,86 @@
+import sys; sys.path.insert(0,'/home/claude')
+import cta as C
+exec(open('/home/claude/build4.py').read().split('# ---------- reel004 ----------')[0].split('import cta as C')[1])
+C.SCENE_S='78.3'
+b=bgs([(-1,11.5,'#E9E2D6'),(11.5,20.0,'#F3E9CF'),(20.0,25.1,'#DAE2E9'),(25.1,40.6,'#E5DDEB'),(40.6,46.2,'#F1E6D6'),(46.2,56.2,'#DCE6DA'),(56.2,69.5,'#F3E9CF'),(69.5,78.3,'#F6E1D3'),(78.3,999,'#F1E6D6')])
+grave='''<svg width="{w}" height="{h}" viewBox="0 0 120 150"><path d="M20 130V60a40 40 0 0 1 80 0v70z" fill="{c}"/><path d="M60 50v44M44 66h32" stroke="#FBF7EE" stroke-width="7" stroke-linecap="round"/><rect x="4" y="128" width="112" height="16" rx="6" fill="#8C7A62"/></svg>'''
+house='''<svg width="{w}" height="{h}" viewBox="0 0 120 110"><path d="M10 52L60 10l50 42" fill="none" stroke="#C4553B" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/><rect x="24" y="48" width="72" height="56" fill="#2E6B5B"/><rect x="50" y="68" width="20" height="36" fill="#E2A63A"/></svg>'''
+s=f'''
+<div id="banner" data-s="11.5" data-e="78.1">Qabr azobiga nima sabab bo‘ladi?</div>
+<section class="scene" data-s="-1" data-e="11.5">
+ <div class="a cx" data-t="0.0" data-a="pop" data-r="-1" style="top:280px"><div class="card tape" style="width:900px;text-align:center;padding:40px 40px">
+  <div class="serif" style="font-size:78px;line-height:1.15">Qabr azobiga <span class="t-terra">nima sabab</span> bo‘ladi?</div></div></div>
+ <div class="a hand cx" data-t="1.79" data-a="up" data-r="-2" style="top:560px;font-size:76px;color:var(--green);white-space:nowrap">bilasizmi?</div>
+ <div class="a" data-t="3.6" data-a="up" style="left:200px;top:700px">{grave.format(w=230,h=288,c="#9A9388")}</div>
+ <div class="a" data-t="3.8" data-a="up" style="left:650px;top:700px">{grave.format(w=230,h=288,c="#9A9388")}</div>
+ <div class="a cx" data-t="5.6" data-a="pop" data-r="1" style="top:1030px"><div class="chip" style="font-size:44px">«Bu ikkisi hozir <span class="t-terra">azoblanmoqda</span>»</div></div>
+ <div class="a cx" data-t="10.7" data-a="stamp" data-d=".3" data-r="-3" style="top:1190px"><div class="stamp" style="font-size:80px">2 TA ISH</div></div>
+</section>
+<section class="scene" data-s="11.5" data-e="20.0">
+ <div class="a cx" data-t="11.55" data-a="pop" data-r="-.6" style="top:300px"><div class="card tape ayah">
+  <div class="caps">Hadisi sharif · Imom Buxoriy, 218</div>
+  <div class="arabic" style="font-size:64px;line-height:1.75;margin-top:12px;color:var(--green)">إِنَّهُمَا لَيُعَذَّبَانِ وَمَا يُعَذَّبَانِ فِي كَبِيرٍ</div>
+  <div class="serif" style="font-size:48px;line-height:1.25;margin-top:16px;color:var(--ink)">{rv([('«Ular',11.6),('katta',11.93,'t-terra'),('deb',12.29),('bilinadigan',12.43),('gunoh',12.93),('uchun',13.21),('azoblanmayapti»',13.5)])}</div></div></div>
+ <div class="a" data-t="14.6" data-a="left" data-r="-1.5" style="left:70px;top:820px"><div class="chip" style="font-size:46px"><span class="label" style="font-size:36px;padding:12px 18px">1</span>💧 siydikdan saqlanmaslik</div></div>
+ <div class="a" data-t="16.6" data-a="right" data-r="1.5" style="left:150px;top:980px"><div class="chip" style="font-size:46px"><span class="label terra" style="font-size:36px;padding:12px 18px">2</span>🗣 gap tashib yurish</div></div>
+</section>
+<section class="scene" data-s="20.0" data-e="25.1">
+ <div class="a hand cx" data-t="20.1" data-a="up" style="top:300px;font-size:76px;color:var(--terra);white-space:nowrap">O‘ylab ko‘ring:</div>
+ <div class="a" data-t="21.0" data-a="pop" data-r="-3" style="left:110px;top:470px"><div class="label" style="font-size:60px;padding:26px 38px">poklik</div></div>
+ <div class="a hand" data-t="22.3" data-a="fade" style="left:470px;top:490px;font-size:60px;color:#8A847A">va</div>
+ <div class="a" data-t="22.5" data-a="pop" data-r="3" style="left:640px;top:470px"><div class="label terra" style="font-size:60px;padding:26px 38px">til</div></div>
+ <div class="a cx" data-t="23.6" data-a="stamp" data-d=".3" data-r="-2" style="top:720px"><div class="serif" style="font-size:120px;color:#9A9388;white-space:nowrap">«arzimas»?</div></div>
+</section>
+<section class="scene" data-s="25.1" data-e="40.6">
+ <div class="a" data-t="25.2" data-a="left" style="left:80px;top:280px"><div class="label gold">Usmon roziyallohu anhu</div></div>
+ <div class="a" data-t="26.7" data-a="up" style="left:80px;top:400px;display:flex;align-items:center;gap:20px">{grave.format(w=90,h=112,c="#9A9388")}<div class="hand" style="font-size:58px;color:var(--green);line-height:1.1">qabr yonida yig‘lar edilar 😢</div></div>
+ <div class="a cx" data-t="32.3" data-a="pop" data-r="-.6" style="top:580px"><div class="card tape ayah">
+  <div class="caps">Hadisi sharif · Imom Termiziy, 2308</div>
+  <div class="arabic" style="font-size:58px;line-height:1.75;margin-top:12px;color:var(--green)">إِنَّ الْقَبْرَ أَوَّلُ مَنْزِلٍ مِنْ مَنَازِلِ الآخِرَةِ</div>
+  <div class="serif" style="font-size:50px;line-height:1.25;margin-top:14px;color:var(--ink)">{rv([('«Qabr —',32.38),('oxirat',33.07,'t-green'),('manzillarining',33.36,'t-green'),('birinchisidir»',34.07,'t-terra')])}</div></div></div>
+ <div class="a" data-t="35.0" data-a="left" data-r="-1" style="left:70px;top:1050px"><div class="chip" style="font-size:42px;color:var(--green)">✓ najot topsa → keyingisi osonroq</div></div>
+ <div class="a" data-t="37.8" data-a="right" data-r="1" style="left:70px;top:1190px"><div class="chip" style="font-size:42px;color:var(--terra)">✗ topmasa → keyingisi og‘irroq</div></div>
+</section>
+<section class="scene" data-s="40.6" data-e="46.2">
+ <div class="a cx" data-t="40.7" data-a="pop" style="top:280px"><div class="serif" style="font-size:300px;line-height:1;color:var(--terra)">?</div></div>
+ <div class="a cx" data-t="41.5" data-a="up" style="top:620px"><div class="card tape" style="width:860px;text-align:center;padding:36px"><div class="serif" style="font-size:58px;line-height:1.2">Qabrda har bir insonga <span class="t-terra">savol</span> beriladi</div></div></div>
+ <div class="a cx" data-t="42.9" data-a="fade" style="top:900px"><div style="position:relative;font:900 56px Nunito;color:#9A9388;white-space:nowrap">javobni yodlab bo‘lmaydi<div class="strike" data-t="43.8"></div></div></div>
+ <div class="a cx" data-t="44.6" data-a="stamp" data-d=".3" data-r="-2" style="top:1030px"><div class="stamp" style="font-size:60px;border-color:var(--green);color:var(--green)">BUTUN UMR BILAN YOZILADI</div></div>
+</section>
+<section class="scene" data-s="46.2" data-e="56.2">
+ <div class="a cx" data-t="46.3" data-a="pop" data-r="-.6" style="top:300px"><div class="card tape ayah">
+  <div class="caps">Ibrohim surasi · 27-oyat</div>
+  <div class="arabic" style="font-size:58px;line-height:1.8;margin-top:12px;color:var(--green)">يُثَبِّتُ اللَّهُ الَّذِينَ آمَنُوا بِالْقَوْلِ الثَّابِتِ فِي الْحَيَاةِ الدُّنْيَا وَفِي الْآخِرَةِ</div></div></div>
+ <div class="a card cx" data-t="47.2" data-a="up" data-r=".6" style="top:760px;width:900px;text-align:center;padding:34px 40px">
+  <div class="serif" style="font-size:50px;line-height:1.25">{rv([('«Alloh',47.28),('iymon',47.71,'t-green'),('keltirganlarni',48.07,'t-green'),('dunyo',48.93),('hayotida',49.29),('ham,',49.79),('oxiratda',50.14),('ham',50.75),('sobit',50.93,'t-terra'),('so‘z',51.32,'t-terra'),('bilan',51.54),('mustahkam',51.82),('qiladi»',52.29)])}</div></div>
+ <div class="a cx" data-t="52.8" data-a="pop" data-r="-1" style="top:1130px"><div class="chip" style="font-size:34px">📖 Buxoriy, 1369: bu oyat — <span class="t-terra">&nbsp;qabrdagi savol</span>&nbsp;haqida</div></div>
+</section>
+<section class="scene" data-s="56.2" data-e="69.5">
+ <div class="a hand cx" data-t="56.3" data-a="up" style="top:280px;font-size:72px;color:var(--terra);white-space:nowrap">Xo‘sh, qanday himoyalanamiz?</div>
+ <div class="a cx" data-t="58.8" data-a="pop" data-r="-1" style="top:400px"><div class="label">🕌 Har namozda · tashahhuddan keyin</div></div>
+ <div class="a cx" data-t="61.3" data-a="pop" data-r="-.6" style="top:540px"><div class="card tape ayah">
+  <div class="caps">Duo · Imom Muslim, 588</div>
+  <div class="arabic" style="font-size:44px;line-height:1.8;margin-top:10px;color:var(--green)">اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ جَهَنَّمَ، وَمِنْ عَذَابِ الْقَبْرِ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ شَرِّ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ</div>
+  <div class="serif" style="font-size:42px;line-height:1.28;margin-top:16px;color:var(--ink)">{rv([('«Allohim,',62.2),('do‘zax',63.07),('azobidan,',63.43),('qabr',64.25,'t-terra'),('azobidan,',64.57,'t-terra'),('hayot',65.36),('va',65.71),('o‘lim',65.86),('fitnasidan',66.14),('va',66.93),('Dajjol',67.07),('fitnasidan',67.57),('Sendan',68.14,'t-green'),('panoh',68.57,'t-green'),('so‘rayman»',68.86,'t-green')])}</div></div></div>
+</section>
+<section class="scene" data-s="69.5" data-e="78.3">
+ <div class="a cx" data-t="69.6" data-a="fade" style="top:290px"><div style="position:relative;font:900 58px Nunito;color:#9A9388;white-space:nowrap">shunchaki tuproq chuqur<div class="strike" data-t="71.3"></div></div></div>
+ <div class="a cx" data-t="71.8" data-a="pop" data-f="4" style="top:420px">{house.format(w=240,h=220)}</div>
+ <div class="a cx" data-t="72.7" data-a="up" style="top:680px"><div class="card tape" style="width:880px;text-align:center;padding:34px"><div class="serif" style="font-size:54px;line-height:1.2">bugungi <span class="t-green">amallaringiz</span> bilan quriladigan <span class="t-terra">UY</span></div></div></div>
+ <div class="a" data-t="74.7" data-a="pop" data-r="-3" style="left:70px;top:960px"><div class="chip" style="font-size:44px">💧 Poklik</div></div>
+ <div class="a" data-t="76.0" data-a="pop" data-r="2" style="left:390px;top:990px"><div class="chip" style="font-size:44px">🤐 Til</div></div>
+ <div class="a" data-t="77.3" data-a="pop" data-r="-2" style="left:640px;top:960px"><div class="chip" style="font-size:44px">📿 Zikr</div></div>
+</section>
+'''
+extra=f'''<div class="a cx" data-t="78.4" data-a="up" data-o="87.95" style="top:300px;font:900 54px Nunito;color:var(--green);white-space:nowrap">Zikrni tark etmang — har kuni birga</div>
+<div class="a cx" data-t="88.1" data-a="pop" style="top:290px;display:flex;gap:22px"><div class="chip" style="font-size:40px">📌 Saqlab qo‘ying</div><div class="a chip" data-t="89.4" data-a="pop" style="position:relative;font-size:40px">📤 Yaqinlaringizga yuboring</div></div>
+<div class="a cx" data-t="83.9" data-a="pop" style="top:1220px"><div class="chip" style="font-size:42px;white-space:nowrap;border:4px solid var(--terra)">💬 Izohlarga <span class="t-terra" style="font-size:56px">«+»</span> qoldiring</div></div>
+<div class="a hand cx" data-t="85.3" data-a="fade" style="top:1335px;font-size:48px;color:#8A847A">yoki</div>
+'''
+c=C.cta(tas=79.8,zikr=81.2,extra=extra,havola=85.7,btn=86.9)
+c=c.replace('style="top:1250px"><div class="chip"','style="top:1400px"><div class="chip"').replace('style="top:1400px"><div style="background:var(--gold)','style="top:1530px"><div style="background:var(--gold)').replace('top:1560px;font:700','top:1690px;font:700')
+c=c.replace('style="top:1070px"><div style="background:var(--terra)','style="top:1060px"><div style="background:var(--terra)')
+s+=c+'''
+<div id="sub" data-hide="81.1"><div id="subbox"></div></div></div>'''+C.TASBEH+'</body></html>'
+open('/home/claude/reel9/index.html','w').write(HEAD+b+s)
+print('ok')
