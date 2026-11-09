@@ -1,0 +1,33 @@
+MADINA — MASJIDI NABAVIY | 3D ZIYORAT QO'LLANMASI
+Ssenariy (ovozlashtirish uchun, ~65–70 soniya)
+Ovoz: Diyor o'rta yoshdagi o'g'il bola (ElevenLabs, eleven_v4)
+==================================================
+
+[thoughtful] Madinani ko'pchilik suratlarda ko'rgan. Lekin u yerga birinchi marta borgan odam qayerga kirishni, qayerda to'xtashni bilmay qoladi. [short pause] Keling, Masjidi Nabaviyni birga ziyorat qilib chiqamiz.
+
+[short pause] Mana, Masjidi Nabaviy. Payg'ambarimiz sollallohu alayhi vasallam hijratdan keyin bu masjid qurilishida sahobalar bilan birga o'zlari ham ishtirok etganlar.
+
+[short pause] Ziyoratchilar odatda Bobus Salom eshigidan kiradi.
+
+[short pause] Ichkariga kirgach, yashil gilam to'shalgan joyga yetamiz. Bu — Ravza. Payg'ambarimiz bu yer haqida: «Uyim bilan minbarim orasi — jannat bog'laridan bir bog'dir», deganlar.
+
+[short pause] Ravzaning chetida Payg'ambarimizning minbari va mehrobi turibdi.
+
+[short pause] Oldinga yursak, Muvojahaga chiqamiz. Shu yerda Payg'ambarimizga salom beriladi. Ularning yonida Abu Bakr va Umar roziyallohu anhumo yotibdilar.
+
+[short pause] Tepaga qarang. Bu — Yashil gumbaz. U Payg'ambarimizning qabrlari ustida joylashgan va Madinaning eng taniqli belgisi.
+
+[short pause] Hujrai saodatning orqa tomonida Suffa supasi bor. Bu yerda ilm o'rganish uchun kelgan kambag'al sahobalar yashagan.
+
+[short pause] Hovlidagi ulkan soyabonlar kunduzi ochilib, ziyoratchilarni jaziramadan asraydi.
+
+[short pause] Masjiddan chiqib, janubi-sharq tomonga yursak, Baqi' qabristoniga kelamiz. Bu yerda ko'plab sahobalar va ahli bayt dafn etilgan.
+
+[short pause] Bilasizmi, Masjidi Nabaviyda o'qilgan bir namoz Masjidul Haromdan boshqa masjidlardagi ming namozdan afzal.
+
+[thoughtful] Endi Madinaga borganingizda, qayerda turganingizni bilasiz.
+
+--------------------------------------------------
+IZOH
+- Kvadrat qavsdagi [thoughtful], [short pause] belgilari ElevenLabs uchun: ular o'qilmaydi, faqat ohang va pauza beradi.
+- Hadislar: «Uyim bilan minbarim orasi…» va «ming namozdan afzal» — Buxoriy va Muslim rivoyati.

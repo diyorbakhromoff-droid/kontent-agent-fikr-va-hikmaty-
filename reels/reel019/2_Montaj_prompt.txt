@@ -1,0 +1,59 @@
+MADINA — MASJIDI NABAVIY | 3D ZIYORAT QO'LLANMASI
+Montaj uchun prompt
+==================================================
+
+FORMAT
+- 1080x1920, 30 fps, Instagram Reels.
+- Uslub «Ka'ba atrofida bir shavt» videosi bilan bir xil: kamera bitta uzluksiz harakatda yuradigan, soddalashtirilgan, chiroyli 3D model.
+
+MODEL
+- Masjidi Nabaviy tungi ko'rinishda.
+- Oq marmar hovli; baland minoralar, uchida oltin hilol.
+- Yashil gumbaz — sahnaning asosiy markazi, yengil nur taratadi. Yonida kumushrang gumbazlar.
+- Hovlida ulkan oq soyabonlar.
+- Tepadan ko'rinadigan Baqi' qabristoni.
+- Odamlar oq kiyimda, kichik va harakatda.
+- Qabr va ichki hujra ko'rsatilmaydi, faqat tashqi gumbaz.
+
+RANGLAR
+- To'q tungi fon: #0b1220
+- Zumrad yashil: #1f7a5a
+- Oltin: #e6c27a
+- Yozuvlar: krem oq
+- Arabcha bezak yozuvlari: Amiri shrifti.
+
+KAMERA YO'LI (har bir sahna ovozdagi gapga mos)
+1. Kirish — tepadan umumiy ko'rinish, sekin pastga tushadi.
+   Sarlavha: «3D ZIYORAT QO'LLANMASI · Madina — Masjidi Nabaviy».
+2. Masjidi Nabaviy — old fasad, minoralar.
+3. Bobus Salom — g'arbiy eshik yaqinlashadi va ochiladi.
+4. Ravza — ichkarida yashil gilam yorishadi.
+5. Minbar va mehrob — oltin bezakli minbar.
+6. Muvojaha — oltin panjarali devor oldida to'xtaydi.
+7. Yashil gumbaz — kamera tepaga ko'tariladi, gumbaz atrofida yengil nur halqasi.
+8. Suffa — hujra ortidagi supa.
+9. Soyabonlar — hovlida soyabonlar birin-ketin ochiladi (harakatli element).
+10. Baqi' — tepadan qabriston ko'rinishi.
+11. Ming namoz — tepaga ko'tarilib, umumiy ko'rinishga qaytadi. Ekranda «x1000» belgisi oltin rangda chiqadi.
+12. Yakuniy kadr — «Endi Madinani yaxshiroq taniysiz · DIYOR».
+
+BELGILAR (har bir joy aytilganda ko'rsatkichli shisha-qora yozuv: oltin chiziq, sarlavha, izoh)
+- Bobus Salom — «Ziyorat shu yerdan boshlanadi»
+- Ravza — «Jannat bog'laridan bir bog'»
+- Minbar — «Payg'ambarimiz minbari»
+- Muvojaha — «Salom beriladigan joy»
+- Yashil gumbaz — «Hujrai saodat ustida»
+- Suffa — «Sahobalar ilm o'rgangan joy»
+- Baqi' — «Sahobalar va ahli bayt qabristoni»
+
+ZIYORAT YO'LI
+- Yerda nuqtali oltin chiziq: kirish → Ravza → Muvojaha → chiqish.
+- Tepada ziyorat qancha bosib o'tilganini ko'rsatuvchi chiziq to'lib boradi.
+
+SUBTITR
+- Pastki qismda, so'zlar ovoz bilan bir vaqtda chiqadi.
+- Asosiy so'zlar oltin rangda va tagiga chizilgan.
+
+OVOZ
+- Musiqasiz.
+- Kamera harakatida sokin shamol ovozi, belgilar chiqqanda nozik signal.

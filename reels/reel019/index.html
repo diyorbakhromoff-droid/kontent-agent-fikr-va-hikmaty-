@@ -1,0 +1,73 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"><style>@font-face{font-family:Corm;font-weight:500;font-style:normal;src:url(fonts/cormorant-garamond-latin-500-normal.woff2)}@font-face{font-family:Corm;font-weight:500;font-style:italic;src:url(fonts/cormorant-garamond-latin-500-italic.woff2)}@font-face{font-family:Corm;font-weight:600;font-style:normal;src:url(fonts/cormorant-garamond-latin-600-normal.woff2)}@font-face{font-family:Corm;font-weight:600;font-style:italic;src:url(fonts/cormorant-garamond-latin-600-italic.woff2)}@font-face{font-family:Corm;font-weight:700;font-style:normal;src:url(fonts/cormorant-garamond-latin-700-normal.woff2)}@font-face{font-family:Corm;font-weight:700;font-style:italic;src:url(fonts/cormorant-garamond-latin-700-italic.woff2)}@font-face{font-family:Corm;font-weight:600;src:url(fonts/cormorant-garamond-latin-ext-600-normal.woff2);unicode-range:U+0100-024F}@font-face{font-family:Mont;font-weight:500;src:url(fonts/montserrat-latin-500-normal.woff2)}@font-face{font-family:Mont;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2)}@font-face{font-family:Mont;font-weight:700;src:url(fonts/montserrat-latin-700-normal.woff2)}@font-face{font-family:Mont;font-weight:800;src:url(fonts/montserrat-latin-800-normal.woff2)}
+html,body{background:#0b1220}#stage{color:#F3E7CF}
+#gl{position:absolute;inset:0;width:1080px;height:1920px}
+.shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(6,10,20,.75) 0%,rgba(6,10,20,0) 22%,rgba(6,10,20,0) 70%,rgba(6,10,20,.8) 100%)}
+.cap{font:600 24px/1 Mont;letter-spacing:.42em;text-transform:uppercase;color:#e6c27a;white-space:nowrap}
+.h{font-family:Corm;font-weight:600;line-height:1.02}
+.it{font-family:Corm;font-style:italic;font-weight:600}
+.g{background:linear-gradient(180deg,#FFF1C4 0%,#e6c27a 50%,#B48A3C 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.glow{filter:drop-shadow(0 0 16px rgba(230,194,122,.5))}
+.arabic{font-family:Amiri;font-weight:700;direction:rtl}
+.lbl{position:absolute;left:0;top:0;width:470px;opacity:0;background:rgba(8,12,22,.72);border:1.5px solid rgba(230,194,122,.55);border-left:6px solid #e6c27a;border-radius:16px;padding:20px 26px 18px;box-shadow:0 24px 50px rgba(0,0,0,.5)}
+.lbl .t{font:600 50px/1 Corm;color:#F3E7CF}.lbl .n{font:500 25px/1.3 Mont;color:#cfc3a8;margin-top:10px}.lbl .ar{position:absolute;right:22px;top:14px;font:700 30px Amiri;color:#e6c27a;direction:rtl}
+#lines{position:absolute;inset:0;pointer-events:none}
+#prog{position:absolute;left:90px;top:205px;width:900px;height:40px;opacity:0}
+#prog .bar{position:absolute;left:0;top:18px;height:3px;width:900px;background:rgba(243,231,207,.18);border-radius:3px}
+#prog .fill{position:absolute;left:0;top:17px;height:5px;width:0;background:linear-gradient(90deg,#B48A3C,#FFF1C4);border-radius:3px;box-shadow:0 0 12px rgba(230,194,122,.8)}
+#prog .m{position:absolute;top:12px;width:15px;height:15px;margin-left:-7px;border-radius:50%;background:#0b1220;border:2px solid rgba(243,231,207,.4)}
+#prog .m.on{background:#e6c27a;border-color:#FFF1C4;box-shadow:0 0 12px #e6c27a}
+#ptitle{position:absolute;top:150px;left:50%;transform:translateX(-50%);opacity:0}
+#sub{top:1560px}
+#subbox{background:rgba(6,10,20,.66);border:1px solid rgba(230,194,122,.3);border-radius:16px;font:600 40px/1.2 Mont;padding:18px 30px;box-shadow:0 18px 40px rgba(0,0,0,.4)}
+#subbox:before{display:none}
+#subbox span{color:#F3E7CF} #subbox span.up{color:rgba(243,231,207,.35)} #subbox span.cur{color:#FFF1C4}
+#subbox span.kw{color:#e6c27a;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:8px}
+#subbox span.kw.up{color:rgba(230,194,122,.4)}
+</style>
+<script>window.CAMK=[[0, [0, 520, 520], [0, 0, 20]], [6, [80, 330, 420], [10, 0, 40]], [11.5, [10, 150, 470], [0, 40, 120]], [16, [-50, 42, 330], [0, 42, 150]], [20.6, [-175, 42, 235], [-90, 12, 110]], [22.9, [-150, 16, 110], [-90, 7, 100]], [24.6, [-118, 24, 104], [-60, 4, 104]], [27.2, [-60, 88, 170], [4, 0, 110]], [30.5, [-20, 76, 172], [4, 0, 110]], [34.8, [14, 70, 175], [2, 0, 112]], [37.4, [-52, 44, 170], [-20, 6, 120]], [39.6, [-36, 42, 168], [-12, 5, 122]], [41.8, [36, 34, 160], [40, 5, 110]], [47.6, [50, 32, 156], [40, 5, 108]], [50.6, [86, 72, 175], [40, 26, 104]], [55.6, [0, 62, 170], [40, 24, 104]], [58.8, [72, 46, 38], [40, 2, 82]], [63.6, [58, 50, 28], [40, 2, 84]], [65.8, [-170, 42, 265], [-100, 15, 180]], [69.2, [-60, 64, 290], [-30, 14, 200]], [72.6, [250, 230, 330], [330, 0, 140]], [76.8, [430, 210, 280], [330, 0, 140]], [80.4, [200, 340, 470], [60, 0, 60]], [84.2, [0, 420, 500], [0, 0, 40]], [91, [0, 520, 560], [0, 0, 30]]];window.TL={"cutIn": 24.6, "cutOut": 63.4, "rawda": 28.2, "door": 22.6, "dome": 50.3, "umb": 65.0, "path0": 23.0, "path1": 73.0};</script>
+<script src="words.js"></script><script src="engine.js"></script><script type="module" src="scene.js"></script></head><body><div id="stage">
+<canvas id="gl" width="1080" height="1920"></canvas><div class="shade"></div>
+<svg id="lines" width="1080" height="1920"></svg>
+<div class="lbl" data-k="bab" data-s="22.5" data-e="24.5"><div class="ar">باب السلام</div><div class="t">Bobus Salom</div><div class="n">Ziyorat shu yerdan boshlanadi</div></div><div class="lbl" data-k="rawda" data-s="28.2" data-e="35.6"><div class="ar">الروضة الشريفة</div><div class="t">Ravza</div><div class="n">Jannat bog‘laridan bir bog‘</div></div><div class="lbl" data-k="minbar" data-s="37.6" data-e="39.9"><div class="ar">المنبر</div><div class="t">Minbar</div><div class="n">Payg‘ambarimiz minbari</div></div><div class="lbl" data-k="muwajaha" data-s="40.8" data-e="48.8"><div class="ar">المواجهة</div><div class="t">Muvojaha</div><div class="n">Salom beriladigan joy</div></div><div class="lbl" data-k="dome" data-s="50.4" data-e="56.8"><div class="ar">القبة الخضراء</div><div class="t">Yashil gumbaz</div><div class="n">Hujrai saodat ustida</div></div><div class="lbl" data-k="suffa" data-s="59.0" data-e="64.1"><div class="ar">الصفة</div><div class="t">Suffa</div><div class="n">Sahobalar ilm o‘rgangan joy</div></div><div class="lbl" data-k="baqi" data-s="72.3" data-e="77.5"><div class="ar">البقيع</div><div class="t">Baqi’</div><div class="n">Sahobalar va ahli bayt qabristoni</div></div>
+<div id="prog"><div class="bar"></div><div class="fill"></div><div class="m" data-t="22.5" style="left:90px"></div><div class="m" data-t="28.2" style="left:210px"></div><div class="m" data-t="37.6" style="left:330px"></div><div class="m" data-t="40.8" style="left:450px"></div><div class="m" data-t="50.4" style="left:570px"></div><div class="m" data-t="59.0" style="left:690px"></div><div class="m" data-t="72.3" style="left:810px"></div></div>
+<div id="ptitle" class="cap" style="font-size:20px;color:#cfc3a8">3D ziyorat · Masjidi Nabaviy</div>
+<section class="scene" data-s="-1" data-e="10.9">
+ <div class="a" data-t="0" data-a="fade" data-d=".8" style="left:-200px;top:120px;width:1480px;height:780px;background:radial-gradient(ellipse at center,rgba(6,10,20,.82) 0%,rgba(6,10,20,.55) 45%,rgba(6,10,20,0) 72%)"></div>
+ <div class="a cx cap" data-t="0.2" data-a="wide" data-ls=".42" style="top:300px">3D ziyorat qo‘llanmasi</div>
+ <div class="a cx" data-t="0.5" data-a="blur" style="top:350px;display:flex;gap:16px;align-items:center"><i style="display:block;width:120px;height:1.5px;background:linear-gradient(90deg,transparent,#e6c27a)"></i><b style="display:block;width:10px;height:10px;background:#e6c27a;transform:rotate(45deg)"></b><i style="display:block;width:120px;height:1.5px;background:linear-gradient(90deg,#e6c27a,transparent)"></i></div>
+ <div class="a cx h" data-t="0.6" data-a="blur" data-d=".8" style="top:400px;font-size:120px;white-space:nowrap;text-shadow:0 8px 30px rgba(0,0,0,.6)">Madina</div>
+ <div class="a cx it g glow" data-t="1.2" data-a="blur" data-d=".8" style="top:540px;font-size:76px;white-space:nowrap">Masjidi Nabaviy</div>
+ <div class="a cx arabic g" data-t="1.8" data-a="blur" data-d=".8" style="top:650px;font-size:64px;white-space:nowrap">المسجد النبوي الشريف</div>
+</section>
+<section class="scene" data-s="83.0" data-e="84.95">
+ <div class="a" data-t="83.0" data-a="fade" data-d=".8" style="left:-200px;top:380px;width:1480px;height:640px;background:radial-gradient(ellipse at center,rgba(6,10,20,.82) 0%,rgba(6,10,20,.55) 45%,rgba(6,10,20,0) 72%)"></div>
+ <div class="a cx h g glow" data-t="83.24" data-a="zoom" data-d=".6" style="top:520px;font-size:260px;white-space:nowrap">×1000</div>
+ <div class="a cx cap" data-t="83.6" data-a="blur" style="top:820px">bir namoz savobi</div>
+</section>
+<section class="scene" data-s="84.95" data-e="999">
+ <div class="a" data-t="84.95" data-a="fade" data-d=".8" style="left:-200px;top:380px;width:1480px;height:700px;background:radial-gradient(ellipse at center,rgba(6,10,20,.82) 0%,rgba(6,10,20,.55) 45%,rgba(6,10,20,0) 72%)"></div>
+ <div class="a cx it" data-t="85.0" data-a="blur" data-d=".8" style="top:560px;font-size:84px;white-space:nowrap;text-shadow:0 8px 30px rgba(0,0,0,.7)">Endi Madinani</div>
+ <div class="a cx it g glow" data-t="85.5" data-a="blur" data-d=".8" style="top:660px;font-size:84px;white-space:nowrap">yaxshiroq taniysiz</div>
+ <div class="a cx" data-t="86.6" data-a="blur" style="top:820px;display:flex;gap:16px;align-items:center"><i style="display:block;width:120px;height:1.5px;background:linear-gradient(90deg,transparent,#e6c27a)"></i><b style="display:block;width:10px;height:10px;background:#e6c27a;transform:rotate(45deg)"></b><i style="display:block;width:120px;height:1.5px;background:linear-gradient(90deg,#e6c27a,transparent)"></i></div>
+ <div class="a cx cap" data-t="87.0" data-a="wide" data-ls=".6" style="top:870px;font-size:34px">Diyor</div>
+</section>
+<div id="sub" data-hide="84.9"><div id="subbox"></div></div></div>
+<script>
+(function(){const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),eo=p=>1-Math.pow(1-p,3);
+const KW=['masjidi','nabaviy','nabaviyni','nabaviyda','bobus','salom','ravza','ravzaning','minbari','mehrobi','muvojahaga','yashil','gumbaz','suffa','soyabonlar','baqi’','ming'];
+const L=[...document.querySelectorAll('.lbl')],svg=document.getElementById('lines'),prog=document.getElementById('prog'),fill=prog.querySelector('.fill'),ms=[...prog.querySelectorAll('.m')],pt=document.getElementById('ptitle');
+const R=window.render;
+window.render=function(t){ if(window.render3d) window.render3d(t); R(t);
+ let lines='';
+ L.forEach(l=>{const s=+l.dataset.s,e=+l.dataset.e;const op=cl((t-s)/.45)*(1-cl((t-e+.35)/.35));l.style.opacity=op;if(op<=0)return;
+  const a=window.ANCH[l.dataset.k],p=window.project(a[0],a[1],a[2]);let x=p[0],y=p[1];
+  let cx=Math.min(1080-500,Math.max(30,x-235)),cy=Math.max(290,Math.min(1250,y-330));
+  const k=eo(cl((t-s)/.6));l.style.transform=`translate(${cx}px,${cy+(1-k)*30}px)`;
+  const ly=cy+150;const lx=Math.min(Math.max(x,cx+30),cx+440);
+  lines+=`<g opacity="${op}"><line x1="${x}" y1="${y}" x2="${lx}" y2="${ly}" stroke="#e6c27a" stroke-width="2.5" stroke-dasharray="${600*k} 600"/><circle cx="${x}" cy="${y}" r="${8+4*Math.sin(t*5)}" fill="none" stroke="#FFF1C4" stroke-width="2"/><circle cx="${x}" cy="${y}" r="5" fill="#e6c27a"/></g>`;});
+ svg.innerHTML=lines;
+ const po=cl((t-11.8)/.6)*(1-cl((t-84.6)/.5));prog.style.opacity=po;pt.style.opacity=po;
+ fill.style.width=(cl((t-11.8)/(77.5-11.8))*720+90*cl((t-11.8)/3))+'px';ms.forEach(m=>m.classList.toggle('on',t>=+m.dataset.t));
+ document.querySelectorAll('#subbox span').forEach(s=>{const w=s.textContent.toLowerCase().replace(/[.,:;!?«»—]/g,'').trim();s.classList.toggle('kw',KW.includes(w));});
+};})();
+</script></body></html>
