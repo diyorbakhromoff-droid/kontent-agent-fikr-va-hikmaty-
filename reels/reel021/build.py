@@ -1,0 +1,164 @@
+import json
+CAMK=[[0,[25,58,12],[-15,36,-30]],[4,[70,95,95],[-15,25,-30]],[10.8,[380,420,520],[0,0,0]],[19.8,[-380,360,420],[0,0,0]],
+ [22.5,[120,42,120],[-15,42,-30]],[25.5,[170,30,70],[-15,130,-30]],[29.5,[320,280,-300],[0,0,0]],[37,[-320,320,-300],[0,0,0]],
+ [46,[220,520,380],[0,0,0]],[53.4,[10,640,70],[0,0,0]],[54.7,[80,85,95],[-14,8,205]],[56.3,[62,72,102],[-14,8,205]],[61.4,[70,80,70],[-15,28,-30]],
+ [66,[50,48,28],[-15,22,-30]],[69.9,[32,30,6],[-15,8,-30]],[71.2,[130,62,-55],[29,8,-32]],[74.3,[115,52,-95],[29,8,-32]],[78.5,[185,95,335],[105,-6,200]],
+ [80.2,[-330,230,-390],[-110,10,-180]],[82.7,[-300,200,-360],[-100,10,-150]],[83.6,[300,42,-15],[150,10,-60]],[86.2,[290,40,-90],[150,10,-60]],[94,[360,390,530],[0,0,0]],[110,[-380,430,500],[0,0,0]]]
+TL={'beam0':22.0,'beam1':29.0,'area0':47.5,'area1':53.6,'area2':91.5,'area3':99.0,'rock0':66.2,'rock1':70.2,
+ 'h_hook':[0.6,6.4],'h_qibli':[53.6,56.4],'h_dome':[58.6,66.0],'h_chain':[70.0,74.3],'h_marwani':[74.6,78.6],'h_rahma':[82.8,86.2],
+ 'minar0':79.4,'minar1':82.7,'gate0':80.4,'gate1':82.7}
+LB=[('qibli',53.6,56.4,'Qibliy masjid','Janubda · kulrang gumbaz','المسجد القبلي'),
+ ('dome',58.6,66.0,'Qubbatus Saxro','Qoya gumbazi · 691-yil','قبة الصخرة'),
+ ('rock',66.2,69.95,'Qoya','Isro hikoyasi bilan bog‘langan','الصخرة'),
+ ('chain',70.0,74.3,'Qubbatus Silsila','Zanjir gumbazi','قبة السلسلة'),
+ ('marwani',74.6,78.6,'Marvoniy namozxonasi','Yer ostida','المصلى المرواني'),
+ ('minaret',79.4,82.65,'4 minora · 11 darvoza','Hududni o‘rab turadi','المآذن'),
+ ('rahma',82.8,86.2,'Bobur Rahma','Sharqiy devordagi darvoza','باب الرحمة')]
+FONTS=''.join(f"@font-face{{font-family:Corm;font-weight:{w};font-style:{st};src:url(fonts/cormorant-garamond-latin-{w}-{st}.woff2)}}" for w in (500,600,700) for st in ('normal','italic'))
+FONTS+="@font-face{font-family:Corm;font-weight:600;src:url(fonts/cormorant-garamond-latin-ext-600-normal.woff2);unicode-range:U+0100-024F}"
+FONTS+=''.join(f"@font-face{{font-family:Mont;font-weight:{w};src:url(fonts/montserrat-latin-{w}-normal.woff2)}}" for w in (500,600,700,800))
+CSS=FONTS+'''
+html,body{background:#0c1424}#stage{color:#F3E7CF}
+#gl{position:absolute;inset:0;width:1080px;height:1920px}
+.shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(6,10,20,.75) 0%,rgba(6,10,20,0) 22%,rgba(6,10,20,0) 70%,rgba(6,10,20,.8) 100%)}
+.cap{font:600 24px/1 Mont;letter-spacing:.42em;text-transform:uppercase;color:#e6c27a;white-space:nowrap}
+.h{font-family:Corm;font-weight:600;line-height:1.02}
+.it{font-family:Corm;font-style:italic;font-weight:600}
+.g{background:linear-gradient(180deg,#FFF1C4 0%,#e6c27a 50%,#B48A3C 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.glow{filter:drop-shadow(0 0 16px rgba(230,194,122,.5))}
+.arabic{font-family:Amiri;font-weight:700;direction:rtl}
+.lbl{position:absolute;left:0;top:0;width:470px;opacity:0;background:rgba(8,12,22,.72);border:1.5px solid rgba(230,194,122,.55);border-left:6px solid #e6c27a;border-radius:16px;padding:20px 26px 18px;box-shadow:0 24px 50px rgba(0,0,0,.5)}
+.lbl .t{font:600 48px/1.05 Corm;color:#F3E7CF;padding-right:120px}.lbl .n{font:500 25px/1.3 Mont;color:#cfc3a8;margin-top:10px}.lbl .ar{position:absolute;right:22px;top:16px;font:700 28px Amiri;color:#e6c27a;direction:rtl}
+#lines{position:absolute;inset:0;pointer-events:none}
+#prog{position:absolute;left:90px;top:205px;width:900px;height:40px;opacity:0}
+#prog .bar{position:absolute;left:0;top:18px;height:3px;width:900px;background:rgba(243,231,207,.18);border-radius:3px}
+#prog .fill{position:absolute;left:0;top:17px;height:5px;width:0;background:linear-gradient(90deg,#B48A3C,#FFF1C4);border-radius:3px;box-shadow:0 0 12px rgba(230,194,122,.8)}
+#prog .m{position:absolute;top:12px;width:15px;height:15px;margin-left:-7px;border-radius:50%;background:#0c1424;border:2px solid rgba(243,231,207,.4)}
+#prog .m.on{background:#e6c27a;border-color:#FFF1C4;box-shadow:0 0 12px #e6c27a}
+#ptitle{position:absolute;top:150px;left:50%;transform:translateX(-50%);opacity:0}
+#sub{top:1560px}
+#subbox{background:rgba(6,10,20,.66);border:1px solid rgba(230,194,122,.3);border-radius:16px;font:600 40px/1.2 Mont;padding:18px 30px;box-shadow:0 18px 40px rgba(0,0,0,.4)}
+#subbox:before{display:none}
+#subbox span{color:#F3E7CF} #subbox span.up{color:rgba(243,231,207,.35)} #subbox span.cur{color:#FFF1C4}
+#subbox span.kw{color:#e6c27a;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:8px}
+#subbox span.kw.up{color:rgba(230,194,122,.4)}
+.card{background:rgba(8,12,22,.74);border:1.5px solid rgba(230,194,122,.45);border-radius:26px;box-shadow:0 30px 60px rgba(0,0,0,.5);padding:40px 46px;text-align:center;position:relative}
+.card:before{content:"";position:absolute;inset:12px;border:1px solid rgba(230,194,122,.22);border-radius:18px;pointer-events:none}
+.rv{color:rgba(243,231,207,.25)}.rv.on{color:#F3E7CF}.rv.t-terra.on{color:#e6c27a}
+.chip{background:rgba(8,12,22,.74);border:1.5px solid rgba(230,194,122,.5);border-radius:40px;padding:18px 34px;font:600 38px Mont;color:#F3E7CF;white-space:nowrap;box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.bd{position:absolute;left:-200px;width:1480px;background:radial-gradient(ellipse at center,rgba(6,10,20,.84) 0%,rgba(6,10,20,.55) 45%,rgba(6,10,20,0) 72%)}
+'''
+def rv(pairs):
+    return ' '.join(f'<span class="rv{(" "+c[0]) if c else ""}" data-t="{t}">{w}</span>' for w,t,*c in pairs)
+def rule(t,top):
+    return f'<div class="a cx" data-t="{t}" data-a="blur" style="top:{top}px;display:flex;gap:16px;align-items:center"><i style="display:block;width:120px;height:1.5px;background:linear-gradient(90deg,transparent,#e6c27a)"></i><b style="display:block;width:10px;height:10px;background:#e6c27a;transform:rotate(45deg)"></b><i style="display:block;width:120px;height:1.5px;background:linear-gradient(90deg,#e6c27a,transparent)"></i></div>'
+def bd(t,top,h,o=None):
+    oo=f' data-o="{o}"' if o else ''
+    return f'<div class="a bd" data-t="{t}" data-a="fade" data-d=".6"{oo} style="top:{top}px;height:{h}px"></div>'
+lbls=''.join(f'<div class="lbl" data-k="{k}" data-s="{s}" data-e="{e}"><div class="ar">{ar}</div><div class="t">{t}</div><div class="n">{n}</div></div>' for k,s,e,t,n,ar in LB)
+marks=''.join(f'<div class="m" data-t="{s}" style="left:{90+i*(720/6):.0f}px"></div>' for i,(k,s,e,t,n,ar) in enumerate(LB))
+ayah=rv([('«Bandasini',12.08),('bir',12.72),('kechada',12.84,'t-terra'),('Masjidul',13.56),('Haromdan',14.0),('atrofini',14.56),('barakali',15.2,'t-terra'),('qilgan',15.68),('Masjidul',16.24,'t-terra'),('Aqsoga',16.8,'t-terra'),('sayr',17.48),('qildirgan',17.72),('Zot',18.32),('pokdir»',18.88)])
+html=f'''<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"><style>{CSS}</style>
+<script>window.CAMK={json.dumps(CAMK)};window.TL={json.dumps(TL)};</script>
+<script src="words.js"></script><script src="engine.js"></script><script type="module" src="scene.js"></script></head><body><div id="stage">
+<canvas id="gl" width="1080" height="1920"></canvas><div class="shade"></div>
+<svg id="lines" width="1080" height="1920"></svg>
+{lbls}
+<div id="prog"><div class="bar"></div><div class="fill"></div>{marks}</div>
+<div id="ptitle" class="cap" style="font-size:20px;color:#cfc3a8">3D ziyorat · Masjidul Aqso</div>
+<section class="scene" data-s="-1" data-e="10.85">
+ {bd(0.9,980,620,'6.5')}
+ <div class="a cx h" data-t="1.24" data-a="zoom" data-d=".5" data-o="6.5" style="top:1110px;font-size:120px;white-space:nowrap;text-shadow:0 8px 30px rgba(0,0,0,.7)">Masjidul Aqso<span class="g">?</span></div>
+ <div class="a cx it" data-t="4.0" data-a="blur" data-o="6.5" style="top:1270px;font-size:68px;white-space:nowrap;text-shadow:0 6px 24px rgba(0,0,0,.8)">aslida — <span class="g">faqat bir qismi</span></div>
+ {bd(6.6,180,700)}
+ <div class="a cx cap" data-t="6.7" data-a="wide" data-ls=".42" style="top:320px">3D ziyorat · Quddus</div>
+ {rule(6.9,370)}
+ <div class="a cx h" data-t="7.24" data-a="blur" data-d=".8" style="top:420px;font-size:116px;white-space:nowrap;text-shadow:0 8px 30px rgba(0,0,0,.6)">Masjidul Aqso</div>
+ <div class="a cx arabic g glow" data-t="8.3" data-a="blur" data-d=".8" style="top:560px;font-size:84px;white-space:nowrap">المسجد الأقصى</div>
+</section>
+<section class="scene" data-s="10.85" data-e="19.9">
+ {bd(10.9,300,1000)}
+ <div class="a cx" data-t="11.0" data-a="rise" style="top:420px"><div class="card" style="width:940px">
+  <div class="cap">Isro surasi · 1-oyat</div>
+  <div class="arabic g" style="font-size:52px;line-height:1.9;margin-top:22px">سُبْحَانَ الَّذِي أَسْرَىٰ بِعَبْدِهِ لَيْلًا مِّنَ الْمَسْجِدِ الْحَرَامِ إِلَى الْمَسْجِدِ الْأَقْصَى الَّذِي بَارَكْنَا حَوْلَهُ</div>
+  <div class="h" style="font-size:50px;line-height:1.2;margin-top:18px">{ayah}</div></div></div>
+</section>
+<section class="scene" data-s="19.9" data-e="29.55">
+ <div class="a cx cap" data-t="19.95" data-a="wide" data-ls=".42" data-o="24.9" style="top:330px;text-shadow:0 4px 18px #000">Isro va Me’roj kechasi</div>
+ <div class="a cx it g glow" data-t="23.44" data-a="zoom" data-d=".6" data-o="24.9" style="top:390px;font-size:88px;white-space:nowrap">osmonga ko‘tarildilar</div>
+ {bd(25.0,300,520)}
+ <div class="a cx" data-t="25.1" data-a="rise" style="top:380px"><div class="card" style="width:860px"><div class="cap">Muslim, 172</div>
+  <div class="h" style="font-size:66px;margin-top:22px;line-height:1.1">Payg‘ambarlarga <span class="g">imom</span> bo‘ldilar</div></div></div>
+</section>
+<section class="scene" data-s="29.55" data-e="37.0">
+ {bd(29.6,280,820)}
+ <div class="a cx" data-t="29.65" data-a="rise" style="top:380px"><div class="card" style="width:820px"><div class="cap">Buxoriy, 399</div>
+  <div class="h g glow" style="font-size:180px;line-height:1;margin-top:18px">1-qibla</div>
+  <div class="it" style="font-size:58px;margin-top:6px">musulmonlarning birinchi qiblasi</div></div></div>
+ <div class="a cx" data-t="33.08" data-a="zoom" style="top:870px"><div class="chip" style="font-size:44px">🧭 16–17 oy shu tomonga</div></div>
+</section>
+<section class="scene" data-s="37.0" data-e="42.36">
+ {bd(37.05,280,820)}
+ <div class="a cx" data-t="37.1" data-a="rise" style="top:380px"><div class="card" style="width:860px"><div class="cap">Buxoriy, 3366</div>
+  <div class="h" style="font-size:64px;margin-top:20px">Yer yuzidagi <span class="g">2-masjid</span></div>
+  <div style="display:flex;justify-content:center;align-items:center;gap:26px;margin-top:30px">
+   <div class="chip" style="font-size:34px">Masjidul Harom</div><div class="a h g" data-t="40.64" data-a="zoom" style="position:relative;font-size:60px">+40 yil</div><div class="a chip" data-t="41.2" data-a="zoom" style="position:relative;font-size:34px;border-color:#e6c27a">Masjidul Aqso</div></div></div></div>
+</section>
+<section class="scene" data-s="42.36" data-e="46.0">
+ {bd(42.4,280,820)}
+ <div class="a cx" data-t="42.45" data-a="rise" style="top:380px"><div class="card" style="width:900px"><div class="cap">Buxoriy, 1189</div>
+  <div class="it" style="font-size:56px;margin-top:20px">ziyorat uchun safar qilinadigan</div>
+  <div class="h g glow" style="font-size:110px;line-height:1.05">uch masjid</div>
+  <div style="display:flex;justify-content:center;gap:20px;margin-top:26px"><div class="a chip" data-t="44.56" data-a="rise" style="position:relative;font-size:32px;opacity:.7">Makka</div><div class="a chip" data-t="44.8" data-a="rise" style="position:relative;font-size:32px;opacity:.7">Madina</div><div class="a chip" data-t="45.04" data-a="zoom" style="position:relative;font-size:32px;border:2px solid #e6c27a;color:#FFF1C4">Quddus</div></div></div></div>
+</section>
+<section class="scene" data-s="46.0" data-e="53.5">
+ <div class="a cx h" data-t="46.04" data-a="blur" data-o="50.6" style="top:330px;font-size:84px;white-space:nowrap;text-shadow:0 8px 30px rgba(0,0,0,.8)">bitta bino <span class="g">emas</span></div>
+ <div class="a cx it" data-t="48.24" data-a="blur" data-o="50.6" style="top:440px;font-size:60px;white-space:nowrap;text-shadow:0 6px 24px #000">devorlar ichidagi <span class="g">butun hudud</span></div>
+ <div class="a cx h g glow count" data-t="50.72" data-d="1.4" data-from="0" data-to="144000" style="top:330px;font-size:150px;line-height:1;text-shadow:none">0</div>
+ <div class="a cx cap" data-t="51.0" data-a="blur" style="top:500px;font-size:28px;text-shadow:0 4px 18px #000">kvadrat metr · taxminan</div>
+</section>
+<section class="scene" data-s="86.2" data-e="94.2">
+ {bd(86.3,260,700)}
+ <div class="a cx it" data-t="86.28" data-a="blur" style="top:360px;font-size:64px;white-space:nowrap">tilla gumbaz —</div>
+ <div class="a cx h g glow" data-t="88.88" data-a="zoom" data-d=".5" style="top:450px;font-size:100px;white-space:nowrap">Aqsoning bir qismi</div>
+ <div class="a cx it" data-t="90.8" data-a="blur" style="top:600px;font-size:60px;white-space:nowrap">Masjidul Aqso — <span class="g">butun muborak hudud</span></div>
+</section>
+<section class="scene" data-s="94.2" data-e="99.1">
+ {bd(94.2,560,800)}
+ <div class="a cx cap" data-t="94.25" data-a="wide" data-ls=".42" style="top:700px">duo</div>
+ {rule(94.4,745)}
+ <div class="a cx it" data-t="94.24" data-a="blur" data-d=".8" style="top:800px;width:960px;text-align:center;font-size:76px;line-height:1.15;text-shadow:0 6px 24px #000">Alloh Aqsodagi musulmon birodarlarimizga <span class="g">yengillik bersin</span></div>
+ <div class="a cx h g glow" data-t="98.32" data-a="zoom" data-d=".5" style="top:1080px;font-size:110px">Omin</div>
+</section>
+<section class="scene" data-s="99.1" data-e="999">
+ {bd(99.1,300,1300)}
+ <div class="a cx cap" data-t="99.16" data-a="wide" data-ls=".42" style="top:420px">har kuni birga</div>
+ <div class="a cx h g glow" data-t="99.3" data-a="zoom" data-d=".6" style="top:480px;font-size:124px;white-space:nowrap">Zikr marafoni</div>
+ <div class="a cx" data-t="100.88" data-a="rise" style="top:700px"><div class="chip" style="border:2px solid #e6c27a">💬 Izohlarga <span class="g" style="font-size:54px">«+»</span> qoldiring</div></div>
+ <div class="a cx it" data-t="102.4" data-a="blur" style="top:820px;font-size:46px;color:#9C8E74">yoki</div>
+ <div class="a cx" data-t="102.8" data-a="rise" style="top:900px"><div class="chip">⬆️ Sahifamiz tepasidagi havola</div></div>
+ <div class="a cx" data-t="105.6" data-a="rise" style="top:1080px;display:flex;gap:22px"><div class="chip" style="font-size:34px">📌 Saqlab qo‘ying</div><div class="a chip" data-t="107.2" data-a="rise" style="position:relative;font-size:34px">📤 Yaqinlarga yuboring</div></div>
+</section>
+<div id="sub" data-hide="94.2"><div id="subbox"></div></div></div>
+<script>
+(function(){{const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x)),eo=p=>1-Math.pow(1-p,3);
+const KW=['aqso','aqsoning','aqsoga','isro','qiblasi','ikkinchi','qibliy','qubbatus','saxro','qoya','silsila','zanjir','marvoniy','minora','darvoza','rahma','144'];
+const L=[...document.querySelectorAll('.lbl')],svg=document.getElementById('lines'),prog=document.getElementById('prog'),fill=prog.querySelector('.fill'),ms=[...prog.querySelectorAll('.m')],pt=document.getElementById('ptitle');
+const R=window.render;
+window.render=function(t){{ if(window.render3d) window.render3d(t); R(t);
+ let lines='';
+ L.forEach(l=>{{const s=+l.dataset.s,e=+l.dataset.e;const op=cl((t-s)/.45)*(1-cl((t-e+.35)/.35));l.style.opacity=op;if(op<=0)return;
+  const a=window.ANCH[l.dataset.k],p=window.project(a[0],a[1],a[2]);let x=p[0],y=p[1];
+  let cx=Math.min(1080-500,Math.max(30,x-235)),cy=Math.max(290,Math.min(1250,y-330));
+  const k=eo(cl((t-s)/.6));l.style.transform=`translate(${{cx}}px,${{cy+(1-k)*30}}px)`;
+  const ly=cy+150;const lx=Math.min(Math.max(x,cx+30),cx+440);
+  lines+=`<g opacity="${{op}}"><line x1="${{x}}" y1="${{y}}" x2="${{lx}}" y2="${{ly}}" stroke="#e6c27a" stroke-width="2.5" stroke-dasharray="${{600*k}} 600"/><circle cx="${{x}}" cy="${{y}}" r="${{8+4*Math.sin(t*5)}}" fill="none" stroke="#FFF1C4" stroke-width="2"/><circle cx="${{x}}" cy="${{y}}" r="5" fill="#e6c27a"/></g>`;}});
+ svg.innerHTML=lines;
+ const po=cl((t-53.4)/.6)*(1-cl((t-86.4)/.5));prog.style.opacity=po;pt.style.opacity=po;
+ fill.style.width=(cl((t-53.6)/(82.8-53.6))*720+90*cl((t-53.4)/2))+'px';ms.forEach(m=>m.classList.toggle('on',t>=+m.dataset.t));
+ document.querySelectorAll('#subbox span').forEach(s=>{{const w=s.textContent.toLowerCase().replace(/[.,:;!?«»—]/g,'').trim();s.classList.toggle('kw',KW.includes(w));}});
+ document.querySelectorAll('.count').forEach(c=>{{if(+c.dataset.to>=1000)c.textContent=c.textContent.replace(/\\B(?=(\\d{{3}})+(?!\\d))/g,' ');}});
+}};}})();
+</script></body></html>'''
+open('/home/claude/reel21/index.html','w').write(html)
+print('ok')
