@@ -1,0 +1,129 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"><script src="words.js"></script><script src="engine.js"></script><style>@font-face{font-family:Corm;font-weight:500;font-style:normal;src:url(fonts/cormorant-garamond-latin-500-normal.woff2)}@font-face{font-family:Corm;font-weight:500;font-style:italic;src:url(fonts/cormorant-garamond-latin-500-italic.woff2)}@font-face{font-family:Corm;font-weight:600;font-style:normal;src:url(fonts/cormorant-garamond-latin-600-normal.woff2)}@font-face{font-family:Corm;font-weight:600;font-style:italic;src:url(fonts/cormorant-garamond-latin-600-italic.woff2)}@font-face{font-family:Corm;font-weight:700;font-style:normal;src:url(fonts/cormorant-garamond-latin-700-normal.woff2)}@font-face{font-family:Corm;font-weight:700;font-style:italic;src:url(fonts/cormorant-garamond-latin-700-italic.woff2)}@font-face{font-family:Corm;font-weight:600;src:url(fonts/cormorant-garamond-latin-ext-600-normal.woff2);unicode-range:U+0100-024F}@font-face{font-family:Corm;font-weight:600;font-style:italic;src:url(fonts/cormorant-garamond-latin-ext-600-italic.woff2);unicode-range:U+0100-024F}@font-face{font-family:Mont;font-weight:500;src:url(fonts/montserrat-latin-500-normal.woff2)}@font-face{font-family:Mont;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2)}@font-face{font-family:Mont;font-weight:700;src:url(fonts/montserrat-latin-700-normal.woff2)}@font-face{font-family:Mont;font-weight:800;src:url(fonts/montserrat-latin-800-normal.woff2)}@font-face{font-family:Ruqaa;font-weight:700;src:url(fonts/aref-ruqaa-arabic-700-normal.woff2)}
+:root{--terra:#E9C772;--ivory:#F3E7CF;--goldA:#F8E3A6;--goldB:#C9A24E}
+html,body{background:#05060A}
+#stage{color:var(--ivory)}
+#fx{position:absolute;inset:0}
+.grain{opacity:.07;mix-blend-mode:screen}.grain2{opacity:.05;mix-blend-mode:screen}
+.vign{background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 45%,rgba(0,0,0,.55) 100%)}
+.g{background:linear-gradient(180deg,#FFF1C4 0%,#E9C772 45%,#B48A3C 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.glow{filter:drop-shadow(0 0 18px rgba(233,199,114,.45)) drop-shadow(0 0 2px rgba(255,240,200,.6))}
+.h{font-family:Corm;font-weight:600;line-height:1.02;letter-spacing:-.5px}
+.it{font-family:Corm;font-style:italic;font-weight:600}
+.cap{font:600 25px/1 Mont;letter-spacing:.42em;text-transform:uppercase;color:#C9A45C;white-space:nowrap}
+.mont{font-family:Mont;font-weight:600}
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.02));border:1.5px solid rgba(212,175,95,.38);border-radius:26px;box-shadow:0 30px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.08)}
+.frame{position:relative;padding:46px 46px 42px;text-align:center}
+.frame:before{content:"";position:absolute;inset:12px;border:1px solid rgba(212,175,95,.28);border-radius:18px;pointer-events:none}
+.dia{position:absolute;width:16px;height:16px;background:#E9C772;transform:rotate(45deg);box-shadow:0 0 14px rgba(233,199,114,.8)}
+.rule{display:flex;align-items:center;gap:18px;justify-content:center}
+.rule i{display:block;height:1.5px;width:120px;background:linear-gradient(90deg,transparent,#C9A45C)}
+.rule i:last-child{background:linear-gradient(90deg,#C9A45C,transparent)}
+.rule b{display:block;width:10px;height:10px;background:#E9C772;transform:rotate(45deg)}
+.arabic{font-family:Amiri;font-weight:700;direction:rtl}
+.ruq{font-family:Ruqaa;font-weight:700;direction:rtl}
+.rv{color:rgba(243,231,207,.22)} .rv.on{color:var(--ivory)} .rv.t-terra.on{color:#E9C772}
+.t-terra{color:#E9C772}
+.serif{font-family:Corm;font-weight:600}
+#banner{background:none;box-shadow:none;color:#C9A45C;font:600 22px/1 Mont;letter-spacing:.36em;text-transform:uppercase;padding:10px 0;border-top:1px solid rgba(212,175,95,.45);border-bottom:1px solid rgba(212,175,95,.45);top:140px}
+#sub{top:1520px}
+#subbox{background:rgba(6,7,12,.62);border:1px solid rgba(212,175,95,.28);border-radius:16px;box-shadow:0 18px 40px rgba(0,0,0,.4);font:600 40px/1.15 Mont;padding:18px 30px}
+#subbox:before{display:none}
+#subbox span{color:var(--ivory)} #subbox span.up{color:rgba(243,231,207,.32)} #subbox span.cur{color:#E9C772}
+.chip{background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));color:var(--ivory);border:1.5px solid rgba(212,175,95,.4);box-shadow:0 20px 40px rgba(0,0,0,.4);font-family:Mont;font-weight:600}
+.hand{font-family:Corm;font-style:italic;font-weight:600}
+.x{display:inline-block;color:#E0705E;font-weight:700}
+.bar{height:12px;border-radius:8px;transform-origin:left center;position:relative}
+.bar:after{content:"";position:absolute;right:-9px;top:-6px;width:24px;height:24px;border-radius:50%;background:inherit;box-shadow:0 0 22px 4px currentColor}
+.rays{position:absolute;left:50%;top:50%;width:2600px;height:2600px;margin:-1300px 0 0 -1300px;background:repeating-conic-gradient(from 0deg,rgba(233,199,114,.06) 0 4deg,rgba(0,0,0,0) 4deg 15deg);-webkit-mask:radial-gradient(circle,#000 0,transparent 60%);mask:radial-gradient(circle,#000 0,transparent 60%)}
+
+#dark{position:absolute;inset:0;background:#000;pointer-events:none;opacity:0}
+.xout{position:relative;display:inline-block}
+.xout:after{content:"";position:absolute;left:-4%;top:52%;height:7px;width:108%;background:#E0705E;border-radius:4px;transform:scaleX(var(--k,0));transform-origin:left}
+.qrow{display:flex;align-items:center;gap:24px;width:960px;padding:26px 30px}
+.qic{width:84px;height:84px;flex:none;border-radius:50%;border:2px solid rgba(233,199,114,.6);display:flex;align-items:center;justify-content:center;font-size:44px}
+.men{margin-left:auto;font:700 40px Mont;color:#1A1408;background:linear-gradient(180deg,#F8E3A6,#D4AF5F 55%,#B48A3C);padding:10px 26px;border-radius:40px;white-space:nowrap;box-shadow:0 0 24px rgba(233,199,114,.45)}
+</style></head><body><div id="stage"><canvas id="fx" width="1080" height="1920"></canvas><div id="star" style="position:absolute;left:50%;top:46%;width:1500px;height:1500px;margin:-750px 0 0 -750px;opacity:.07"><svg viewBox="0 0 200 200" width="1500" height="1500"><g fill="none" stroke="#E9C772" stroke-width=".5"><rect x="45" y="45" width="110" height="110"/><rect x="45" y="45" width="110" height="110" transform="rotate(45 100 100)"/><circle cx="100" cy="100" r="36"/><circle cx="100" cy="100" r="78"/><rect x="62" y="62" width="76" height="76" transform="rotate(22.5 100 100)"/><rect x="62" y="62" width="76" height="76" transform="rotate(67.5 100 100)"/></g></svg></div><div class="grain"></div><div class="grain2"></div><div class="vign"></div>
+<div id="banner" data-s="10.2" data-e="62.5">Bir kunda to‘rt savol</div>
+<section class="scene" data-s="-1" data-e="10.2">
+ <div class="a cx cap" data-t="0.05" data-a="wide" data-ls=".42" style="top:250px">Sahobalar hayotidan</div>
+ <div class="a cx rule" data-t="0.3" data-a="blur" style="top:300px"><i></i><b></b><i></i></div>
+ <div class="a cx h g glow count" data-t="1.68" data-d=".6" data-from="0" data-to="4" style="top:380px;font-size:300px;line-height:1">0</div>
+ <div class="a cx it" data-t="2.08" data-a="blur" style="top:700px;font-size:70px;white-space:nowrap">ta savol</div>
+ <div class="a cx it" data-t="3.4" data-a="blur" style="top:840px;font-size:60px;white-space:nowrap;color:#BFAF90">To‘rttasiga ham bitta odam:</div>
+ <div class="a cx h g glow" data-t="5.44" data-a="stamp" data-d=".35" style="top:940px;font-size:150px;line-height:1">«Men»</div>
+ <div class="a cx it" data-t="7.2" data-a="blur" style="top:1140px;font-size:60px;white-space:nowrap">va u <span class="g">jannat bashoratini</span> oldi</div>
+</section>
+<section class="scene" data-s="10.2" data-e="31.4">
+ <div class="a cx cap" data-t="10.25" data-a="wide" data-ls=".42" style="top:280px">Payg‘ambarimiz so‘radilar</div>
+ <div class="a cx rule" data-t="10.5" data-a="blur" style="top:330px"><i></i><b></b><i></i></div>
+ <div class="a cx" data-t="12.96" data-a="rise" style="top:440px"><div class="glass qrow"><div class="qic">🌙</div><div class="h" style="font-size:50px;white-space:nowrap">Bugun kim ro‘za tutdi?</div><div class="a men" data-t="16.36" data-a="stamp" data-d=".3" style="position:relative">«Men»</div></div></div>
+ <div class="a cx" data-t="17.36" data-a="rise" style="top:660px"><div class="glass qrow"><div class="qic">🤲</div><div class="h" style="font-size:50px;white-space:nowrap">Kim janozaga ergashdi?</div><div class="a men" data-t="20.68" data-a="stamp" data-d=".3" style="position:relative">«Men»</div></div></div>
+ <div class="a cx" data-t="21.68" data-a="rise" style="top:880px"><div class="glass qrow"><div class="qic">🍲</div><div class="h" style="font-size:50px;white-space:nowrap">Kim miskinga ovqat berdi?</div><div class="a men" data-t="25.48" data-a="stamp" data-d=".3" style="position:relative">«Men»</div></div></div>
+ <div class="a cx" data-t="26.48" data-a="rise" style="top:1100px"><div class="glass qrow"><div class="qic">🩺</div><div class="h" style="font-size:50px;white-space:nowrap">Kim bemorni ko‘rgani bordi?</div><div class="a men" data-t="30.48" data-a="stamp" data-d=".3" style="position:relative">«Men»</div></div></div>
+</section>
+<section class="scene" data-s="31.4" data-e="37.4">
+ <div class="rays" id="rays1"></div>
+ <div class="a cx it" data-t="31.52" data-a="blur" style="top:330px;font-size:64px;white-space:nowrap">Shunda Payg‘ambarimiz dedilar:</div>
+ <div class="a cx" data-t="32.4" data-a="rise" style="top:500px"><div class="glass frame" style="width:940px">
+ <div class="dia" style="left:-8px;top:50%;margin-top:-8px"></div><div class="dia" style="right:-8px;top:50%;margin-top:-8px"></div>
+ <div class="cap">Muslim, 1028</div>
+ <div class="arabic g" style="font-size:66px;line-height:1.9;margin-top:22px">مَا اجْتَمَعْنَ فِي امْرِئٍ إِلاَّ دَخَلَ الْجَنَّةَ</div>
+ <div class="rule" style="margin:8px 0 14px"><i style="width:80px"></i><b></b><i style="width:80px"></i></div>
+ <div class="h" style="font-size:72px;line-height:1.18"><span class="rv" data-t="33.4">«Bu</span> <span class="rv" data-t="33.68">amallar</span> <span class="rv" data-t="34.16">kimda</span> <span class="rv t-terra" data-t="34.6">jamlansa,</span> <span class="rv" data-t="35.6">albatta</span> <span class="rv t-terra" data-t="36.16">jannatga</span> <span class="rv t-terra" data-t="36.64">kiradi»</span></div></div></div>
+</section>
+<section class="scene" data-s="37.4" data-e="58.3">
+ <div class="a cx h" data-t="0" data-a="none" data-o="47.7" style="top:300px;width:980px;text-align:center;font-size:100px;"><span class="a" data-t="38.4" data-a="blur" style="position:relative;display:inline-block">Hammasi</span> <span class="a g glow" data-t="39.04" data-a="blur" style="position:relative;display:inline-block">bir</span> <span class="a g glow" data-t="39.28" data-a="blur" style="position:relative;display:inline-block">kunda</span></div>
+ <div class="a cx it" data-t="40.24" data-a="blur" data-o="47.7" style="top:450px;font-size:62px;white-space:nowrap;color:#BFAF90">va hech biri ulkan ish emas</div>
+ <div class="a" data-t="41.9" data-a="none" data-o="47.7" style="left:0;top:600px;width:1080px;display:flex;flex-wrap:wrap;justify-content:center;gap:24px 26px">
+  <div class="a chip" data-t="42.0" data-a="zoom" style="position:relative;font-size:40px;padding:20px 34px;border-radius:40px">🌙 bir kunlik ro‘za</div>
+  <div class="a chip" data-t="43.36" data-a="zoom" style="position:relative;font-size:40px;padding:20px 34px;border-radius:40px">🤲 bitta janoza</div>
+  <div class="a chip" data-t="44.8" data-a="zoom" style="position:relative;font-size:40px;padding:20px 34px;border-radius:40px">🍲 bir tovoq ovqat</div>
+  <div class="a chip" data-t="46.32" data-a="zoom" style="position:relative;font-size:40px;padding:20px 34px;border-radius:40px">🩺 bitta ziyorat</div></div>
+ <div class="a cx it" data-t="47.76" data-a="blur" style="top:300px;font-size:62px;white-space:nowrap">Abu Bakrni Abu Bakr qilgan narsa —</div>
+ <div class="a cx h" data-t="50.24" data-a="blur" style="top:430px;font-size:72px;white-space:nowrap;color:#BFAF90"><span class="xout" data-k0="51.4">bitta katta amal</span>&nbsp; emas</div>
+ <div class="a cx h g glow" data-t="52.08" data-a="zoom" data-d=".5" style="top:570px;font-size:96px;white-space:nowrap">har kungi kichik amallar</div>
+ <div class="a cx rule" data-t="54.3" data-a="blur" style="top:740px"><i></i><b></b><i></i></div>
+ <div class="a cx it" data-t="54.72" data-a="blur" style="top:800px;font-size:64px;white-space:nowrap">Siz bugun shu to‘rttasidan</div>
+ <div class="a cx h g glow" data-t="56.64" data-a="zoom" style="top:900px;font-size:110px;white-space:nowrap">nechtasini qildingiz?</div>
+</section>
+<section class="scene" data-s="58.3" data-e="62.6">
+ <div class="rays" id="rays2"></div>
+ <div class="a cx h" data-t="0" data-a="none" style="top:460px;width:980px;text-align:center;font-size:120px;"><span class="a g glow" data-t="58.48" data-a="blur" style="position:relative;display:inline-block">Jannat</span> <span class="a g glow" data-t="58.96" data-a="blur" style="position:relative;display:inline-block">yo‘li</span></div>
+ <div class="a cx rule" data-t="59.3" data-a="blur" style="top:620px"><i></i><b></b><i></i></div>
+ <div class="a cx it" data-t="59.6" data-a="blur" style="top:690px;font-size:68px;white-space:nowrap">kichik amallar bir kunda jamlanganda</div>
+ <div class="a cx h g glow" data-t="61.76" data-a="zoom" data-d=".5" style="top:810px;font-size:120px;white-space:nowrap">ochiladi</div>
+</section>
+<section class="scene" data-s="62.6" data-e="999">
+<div class="a cx" data-t="63.3" data-a="pop" style="top:600px"><svg width="420" height="420" viewBox="0 0 200 200" id="tasbeh" data-t0="63.349999999999994"></svg><div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="serif count" data-t="63.349999999999994" data-d="1.3" data-from="0" data-to="33" style="font-size:140px;line-height:1;color:#F3E7CF">0</div><div style="font:600 24px Mont;color:#9C8E74">/ 33</div></div></div>
+<div class="a cx" data-t="68.32" data-a="stamp" data-d=".32" data-r="-2" style="top:1060px"><div class="h g glow" style="font-size:118px;white-space:nowrap;letter-spacing:.04em">Zikr marafoni</div></div>
+<div class="a cx it g glow" data-t="62.7" data-a="blur" data-o="76.1" style="top:290px;font-size:62px;white-space:nowrap">Kichik, lekin ulug‘ amal</div>
+<div class="a cx" data-t="76.16" data-a="rise" style="top:290px;display:flex;gap:22px"><div class="chip" style="font-size:36px">📌 Saqlab qo‘ying</div><div class="a chip" data-t="77.76" data-a="rise" style="position:relative;font-size:36px">📤 Yaqinlaringizga yuboring</div></div>
+<div class="a cx" data-t="71.2" data-a="zoom" style="top:1220px"><div class="chip" style="font-size:38px;white-space:nowrap;border:2px solid #E9C772">💬 Izohlarga <span class="g" style="font-size:54px">«+»</span> qoldiring</div></div>
+<div class="a hand cx" data-t="72.8" data-a="blur" style="top:1330px;font-size:46px;color:#9C8E74">yoki</div>
+<div class="a cx" data-t="73.44" data-a="up" style="top:1395px"><div class="chip" style="font-size:38px;white-space:nowrap">⬆️ Sahifamiz tepasidagi havola</div></div>
+<div class="a cx" data-t="74.9" data-a="pop" style="top:1520px"><div style="background:linear-gradient(180deg,#F8E3A6,#D4AF5F 55%,#B48A3C);color:#1A1408;font:700 50px Mont;padding:28px 60px;border-radius:60px;white-space:nowrap;box-shadow:0 0 40px rgba(233,199,114,.45),0 18px 30px rgba(0,0,0,.4)">Marafonga qo‘shiling!</div></div>
+<div class="a cx" data-t="75.30000000000001" data-a="fade" style="top:1680px;font:600 28px Mont;color:#9C8E74;white-space:nowrap">Telegram: @Zikrmarafoni_bot</div>
+</section>
+
+<div id="dark"></div><div id="sub" data-hide="62.5"><div id="subbox"></div></div></div><script>(function(){
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+let seed=25;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};
+const fx=document.getElementById('fx'),f=fx.getContext('2d');
+const P=[...Array(150)].map(()=>({x:rnd()*1080,y:rnd()*1920,s:.6+rnd()*2.2,v:8+rnd()*26,a:.15+rnd()*.5,ph:rnd()*6.28}));
+const TINT=[[-9,[52,36,12]],[10.2,[14,26,48]],[31.4,[60,42,12]],[37.4,[18,30,40]],[58.3,[54,38,12]],[62.6,[40,28,12]]];
+function tint(t){let i=0;while(i<TINT.length-1&&t>=TINT[i+1][0])i++;const a=TINT[i][1];if(i==TINT.length-1)return a;const b=TINT[i+1][1],k=cl((t-(TINT[i+1][0]-.5))/1);return a.map((v,j)=>v+(b[j]-v)*k)}
+const scenes=[...document.querySelectorAll('.scene')],star=document.getElementById('star');
+const rays=[...document.querySelectorAll('.rays')],xs=[...document.querySelectorAll('.xout')];
+const R=window.render;
+window.render=function(t){R(t);
+ const [r,g,b]=tint(t);const gr=f.createRadialGradient(540,820,40,540,820,1250);gr.addColorStop(0,`rgb(${r|0},${g|0},${b|0})`);gr.addColorStop(1,'#04050A');f.fillStyle=gr;f.fillRect(0,0,1080,1920);
+ P.forEach(p=>{const y=((p.y-t*p.v)%1920+1920)%1920,x=p.x+Math.sin(t*.4+p.ph)*20;f.globalAlpha=p.a*(.6+.4*Math.sin(t*2+p.ph));f.fillStyle='#E9C772';f.beginPath();f.arc(x,y,p.s,0,6.283);f.fill();});
+ f.globalAlpha=1;
+ star.style.transform=`rotate(${t*2.2}deg) scale(${1+.04*Math.sin(t*.3)})`;
+ scenes.forEach(sc=>{const s=+sc.dataset.s,e=Math.min(+sc.dataset.e,s+14);const k=cl((t-s)/(e-s));sc.style.transform=`scale(${1+.035*k})`;});
+ xs.forEach(x=>x.style.setProperty('--k',cl((t-+x.dataset.k0)/.35)));
+ rays.forEach(x=>x.style.transform=`rotate(${t*3}deg)`);
+};})();</script><script>(function(){const s=document.getElementById('tasbeh');const t0=+s.dataset.t0;let h='';
+for(let i=0;i<33;i++){const a=-Math.PI/2+i*2*Math.PI/33,x=100+82*Math.cos(a),y=100+82*Math.sin(a);
+h+=`<circle class="bead" data-t="${(t0+i*1.3/33).toFixed(3)}" data-on="${i%11==10?'#FFF1C4':'#D4AF5F'}" data-off="rgba(233,199,114,.14)" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7.4"/>`;}
+h+=`<path d="M100 182v14" stroke="#E9C772" stroke-width="5"/>`;s.innerHTML=h;})();window.render(0);</script></body></html>
