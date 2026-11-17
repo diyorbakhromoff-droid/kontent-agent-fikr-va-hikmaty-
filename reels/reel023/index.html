@@ -1,0 +1,213 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"><script src="words.js"></script><script src="engine.js"></script><style>@font-face{font-family:Corm;font-weight:500;font-style:normal;src:url(fonts/cormorant-garamond-latin-500-normal.woff2)}@font-face{font-family:Corm;font-weight:500;font-style:italic;src:url(fonts/cormorant-garamond-latin-500-italic.woff2)}@font-face{font-family:Corm;font-weight:600;font-style:normal;src:url(fonts/cormorant-garamond-latin-600-normal.woff2)}@font-face{font-family:Corm;font-weight:600;font-style:italic;src:url(fonts/cormorant-garamond-latin-600-italic.woff2)}@font-face{font-family:Corm;font-weight:700;font-style:normal;src:url(fonts/cormorant-garamond-latin-700-normal.woff2)}@font-face{font-family:Corm;font-weight:700;font-style:italic;src:url(fonts/cormorant-garamond-latin-700-italic.woff2)}@font-face{font-family:Corm;font-weight:600;src:url(fonts/cormorant-garamond-latin-ext-600-normal.woff2);unicode-range:U+0100-024F}@font-face{font-family:Corm;font-weight:600;font-style:italic;src:url(fonts/cormorant-garamond-latin-ext-600-italic.woff2);unicode-range:U+0100-024F}@font-face{font-family:Mont;font-weight:500;src:url(fonts/montserrat-latin-500-normal.woff2)}@font-face{font-family:Mont;font-weight:600;src:url(fonts/montserrat-latin-600-normal.woff2)}@font-face{font-family:Mont;font-weight:700;src:url(fonts/montserrat-latin-700-normal.woff2)}@font-face{font-family:Mont;font-weight:800;src:url(fonts/montserrat-latin-800-normal.woff2)}@font-face{font-family:Ruqaa;font-weight:700;src:url(fonts/aref-ruqaa-arabic-700-normal.woff2)}
+:root{--terra:#E9C772;--ivory:#F3E7CF;--goldA:#F8E3A6;--goldB:#C9A24E}
+html,body{background:#05060A}
+#stage{color:var(--ivory)}
+#fx{position:absolute;inset:0}
+.grain{opacity:.07;mix-blend-mode:screen}.grain2{opacity:.05;mix-blend-mode:screen}
+.vign{background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 45%,rgba(0,0,0,.55) 100%)}
+.g{background:linear-gradient(180deg,#FFF1C4 0%,#E9C772 45%,#B48A3C 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.glow{filter:drop-shadow(0 0 18px rgba(233,199,114,.45)) drop-shadow(0 0 2px rgba(255,240,200,.6))}
+.h{font-family:Corm;font-weight:600;line-height:1.02;letter-spacing:-.5px}
+.it{font-family:Corm;font-style:italic;font-weight:600}
+.cap{font:600 25px/1 Mont;letter-spacing:.42em;text-transform:uppercase;color:#C9A45C;white-space:nowrap}
+.mont{font-family:Mont;font-weight:600}
+.glass{background:linear-gradient(160deg,rgba(255,255,255,.075),rgba(255,255,255,.02));border:1.5px solid rgba(212,175,95,.38);border-radius:26px;box-shadow:0 30px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.08)}
+.frame{position:relative;padding:46px 46px 42px;text-align:center}
+.frame:before{content:"";position:absolute;inset:12px;border:1px solid rgba(212,175,95,.28);border-radius:18px;pointer-events:none}
+.dia{position:absolute;width:16px;height:16px;background:#E9C772;transform:rotate(45deg);box-shadow:0 0 14px rgba(233,199,114,.8)}
+.rule{display:flex;align-items:center;gap:18px;justify-content:center}
+.rule i{display:block;height:1.5px;width:120px;background:linear-gradient(90deg,transparent,#C9A45C)}
+.rule i:last-child{background:linear-gradient(90deg,#C9A45C,transparent)}
+.rule b{display:block;width:10px;height:10px;background:#E9C772;transform:rotate(45deg)}
+.arabic{font-family:Amiri;font-weight:700;direction:rtl}
+.ruq{font-family:Ruqaa;font-weight:700;direction:rtl}
+.rv{color:rgba(243,231,207,.22)} .rv.on{color:var(--ivory)} .rv.t-terra.on{color:#E9C772}
+.t-terra{color:#E9C772}
+.serif{font-family:Corm;font-weight:600}
+#banner{background:none;box-shadow:none;color:#C9A45C;font:600 22px/1 Mont;letter-spacing:.36em;text-transform:uppercase;padding:10px 0;border-top:1px solid rgba(212,175,95,.45);border-bottom:1px solid rgba(212,175,95,.45);top:140px}
+#sub{top:1520px}
+#subbox{background:rgba(6,7,12,.62);border:1px solid rgba(212,175,95,.28);border-radius:16px;box-shadow:0 18px 40px rgba(0,0,0,.4);font:600 40px/1.15 Mont;padding:18px 30px}
+#subbox:before{display:none}
+#subbox span{color:var(--ivory)} #subbox span.up{color:rgba(243,231,207,.32)} #subbox span.cur{color:#E9C772}
+.chip{background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.02));color:var(--ivory);border:1.5px solid rgba(212,175,95,.4);box-shadow:0 20px 40px rgba(0,0,0,.4);font-family:Mont;font-weight:600}
+.hand{font-family:Corm;font-style:italic;font-weight:600}
+.x{display:inline-block;color:#E0705E;font-weight:700}
+.bar{height:12px;border-radius:8px;transform-origin:left center;position:relative}
+.bar:after{content:"";position:absolute;right:-9px;top:-6px;width:24px;height:24px;border-radius:50%;background:inherit;box-shadow:0 0 22px 4px currentColor}
+.rays{position:absolute;left:50%;top:50%;width:2600px;height:2600px;margin:-1300px 0 0 -1300px;background:repeating-conic-gradient(from 0deg,rgba(233,199,114,.06) 0 4deg,rgba(0,0,0,0) 4deg 15deg);-webkit-mask:radial-gradient(circle,#000 0,transparent 60%);mask:radial-gradient(circle,#000 0,transparent 60%)}
+
+#dark{position:absolute;inset:0;background:#000;pointer-events:none;opacity:0}
+#birds{position:absolute;inset:0;pointer-events:none}
+</style></head><body><div id="stage"><canvas id="fx" width="1080" height="1920"></canvas><div id="star" style="position:absolute;left:50%;top:46%;width:1500px;height:1500px;margin:-750px 0 0 -750px;opacity:.07"><svg viewBox="0 0 200 200" width="1500" height="1500"><g fill="none" stroke="#E9C772" stroke-width=".5"><rect x="45" y="45" width="110" height="110"/><rect x="45" y="45" width="110" height="110" transform="rotate(45 100 100)"/><circle cx="100" cy="100" r="36"/><circle cx="100" cy="100" r="78"/><rect x="62" y="62" width="76" height="76" transform="rotate(22.5 100 100)"/><rect x="62" y="62" width="76" height="76" transform="rotate(67.5 100 100)"/></g></svg></div><div class="grain"></div><div class="grain2"></div><div class="vign"></div>
+<div id="banner" data-s="9.5" data-e="100.3">Ka‘bani kim himoya qildi?</div>
+<section class="scene" data-s="-1" data-e="9.56">
+ <div class="a cx cap" data-t="0.05" data-a="wide" data-ls=".42" style="top:250px">Fil yili</div>
+ <div class="a cx rule" data-t="0.3" data-a="blur" style="top:300px"><i></i><b></b><i></i></div>
+ <div class="a cx" data-t="0.1" data-a="zoom" data-d=".7" style="top:400px"><svg width="340" height="325" viewBox="0 0 240 230" style="overflow:visible"><defs><linearGradient id="kb1" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1C1A18"/><stop offset="1" stop-color="#0A0908"/></linearGradient></defs>
+<ellipse class="kglow" cx="120" cy="200" rx="150" ry="26" fill="rgba(233,199,114,.18)" style="filter:blur(10px)"/>
+<path d="M30 60L120 30L210 60V190L120 220L30 190Z" fill="url(#kb1)" stroke="rgba(233,199,114,.5)" stroke-width="2"/>
+<path d="M120 30V220" stroke="rgba(233,199,114,.25)" stroke-width="2"/>
+<path d="M30 92L120 64L210 92V108L120 80L30 108Z" fill="#D4AF5F"/>
+<rect x="140" y="140" width="34" height="56" fill="#C9A24E" transform="skewY(-18) translate(0,52)"/></svg></div>
+ <div class="a" data-t="0.4" data-a="rise" style="left:60px;top:500px"><div class="elw"><svg width="220" height="161" viewBox="0 0 300 220" style="overflow:visible"><g fill="rgba(233,199,114,.10)" stroke="#E9C772" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M70 70Q80 30 140 30Q210 30 232 70Q246 96 236 120L232 180H208L204 140Q170 150 130 146L126 180H102L98 140Q80 132 72 116Z"/>
+<path d="M232 70Q262 60 272 90Q280 120 270 160Q266 176 254 170" fill="none"/>
+<path d="M226 66Q200 60 196 92Q194 116 220 118" fill="rgba(233,199,114,.18)"/>
+<circle cx="246" cy="84" r="4" fill="#E9C772" stroke="none"/>
+<path d="M70 80Q52 90 56 112" fill="none"/></g></svg></div></div>
+ <div class="a cx h" data-t="0" data-a="none" data-o="3.5" style="top:800px;width:980px;text-align:center;font-size:82px;"><span class="a g glow" data-t="0.0" data-a="blur" style="position:relative;display:inline-block">Fillari</span> <span class="a" data-t="0.56" data-a="blur" style="position:relative;display:inline-block">bor</span> <span class="a" data-t="1.36" data-a="blur" style="position:relative;display:inline-block">qo‘shin</span></div>
+ <div class="a cx it" data-t="1.76" data-a="blur" data-o="3.5" style="top:910px;font-size:62px;white-space:nowrap">Ka‘bani <span class="g">buzishga keldi</span></div>
+ <div class="a cx it" data-t="3.56" data-a="blur" data-o="6.95" style="top:840px;font-size:62px;white-space:nowrap">Makkaliklar jang qilmadi —</div>
+ <div class="a cx h" data-t="5.39" data-a="blur" data-o="6.95" style="top:940px;font-size:74px;white-space:nowrap">tog‘larga chiqib ketishdi</div>
+ <div class="a cx it" data-t="7.0" data-a="blur" style="top:820px;font-size:62px;white-space:nowrap">Unda Ka‘bani</div>
+ <div class="a cx h g glow" data-t="8.08" data-a="zoom" data-d=".5" style="top:920px;font-size:120px;white-space:nowrap">kim himoya qildi?</div>
+</section>
+<section class="scene" data-s="9.56" data-e="21.24">
+ <div class="a cx cap" data-t="9.6" data-a="wide" data-ls=".42" style="top:300px">Yaman</div>
+ <div class="a cx rule" data-t="9.8" data-a="blur" style="top:350px"><i></i><b></b><i></i></div>
+ <div class="a cx h" data-t="0" data-a="none" style="top:420px;width:980px;text-align:center;font-size:96px;"><span class="a g glow" data-t="10.24" data-a="blur" style="position:relative;display:inline-block">Abraha</span> <span class="a" data-t="10.8" data-a="blur" style="position:relative;display:inline-block">degan</span> <span class="a" data-t="11.08" data-a="blur" style="position:relative;display:inline-block">hukmdor</span></div>
+ <div class="a cx it" data-t="11.84" data-a="blur" style="top:570px;font-size:62px;white-space:nowrap">ulkan cherkov qurdi</div>
+ <div class="a cx" data-t="13.6" data-a="rise" style="top:690px"><div class="glass frame" style="width:880px"><div class="h" style="font-size:56px;line-height:1.25"><span class="rv" data-t="13.84">Arablar</span> <span class="rv t-terra" data-t="14.4">Ka‘ba</span> <span class="rv" data-t="14.8">o‘rniga</span> <span class="rv t-terra" data-t="15.28">unga</span> <span class="rv" data-t="15.6">kelishini</span> <span class="rv" data-t="16.0">xohladi</span></div></div></div>
+ <div class="a" data-t="17.4" data-a="rise" style="left:0;top:1000px;width:1080px;display:flex;justify-content:center;gap:40px"><svg width="170" height="124" viewBox="0 0 300 220" style="overflow:visible"><g fill="rgba(233,199,114,.10)" stroke="#E9C772" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M70 70Q80 30 140 30Q210 30 232 70Q246 96 236 120L232 180H208L204 140Q170 150 130 146L126 180H102L98 140Q80 132 72 116Z"/>
+<path d="M232 70Q262 60 272 90Q280 120 270 160Q266 176 254 170" fill="none"/>
+<path d="M226 66Q200 60 196 92Q194 116 220 118" fill="rgba(233,199,114,.18)"/>
+<circle cx="246" cy="84" r="4" fill="#E9C772" stroke="none"/>
+<path d="M70 80Q52 90 56 112" fill="none"/></g></svg><svg width="170" height="124" viewBox="0 0 300 220" style="overflow:visible"><g fill="rgba(233,199,114,.10)" stroke="#E9C772" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M70 70Q80 30 140 30Q210 30 232 70Q246 96 236 120L232 180H208L204 140Q170 150 130 146L126 180H102L98 140Q80 132 72 116Z"/>
+<path d="M232 70Q262 60 272 90Q280 120 270 160Q266 176 254 170" fill="none"/>
+<path d="M226 66Q200 60 196 92Q194 116 220 118" fill="rgba(233,199,114,.18)"/>
+<circle cx="246" cy="84" r="4" fill="#E9C772" stroke="none"/>
+<path d="M70 80Q52 90 56 112" fill="none"/></g></svg><svg width="170" height="124" viewBox="0 0 300 220" style="overflow:visible"><g fill="rgba(233,199,114,.10)" stroke="#E9C772" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M70 70Q80 30 140 30Q210 30 232 70Q246 96 236 120L232 180H208L204 140Q170 150 130 146L126 180H102L98 140Q80 132 72 116Z"/>
+<path d="M232 70Q262 60 272 90Q280 120 270 160Q266 176 254 170" fill="none"/>
+<path d="M226 66Q200 60 196 92Q194 116 220 118" fill="rgba(233,199,114,.18)"/>
+<circle cx="246" cy="84" r="4" fill="#E9C772" stroke="none"/>
+<path d="M70 80Q52 90 56 112" fill="none"/></g></svg></div>
+ <div class="a cx h g glow" data-t="19.76" data-a="zoom" style="top:1200px;font-size:92px;white-space:nowrap">Makkaga yo‘l oldi</div>
+</section>
+<section class="scene" data-s="21.24" data-e="30.44">
+ <div class="a cx cap" data-t="21.28" data-a="wide" data-ls=".42" style="top:300px">Makka chetida</div>
+ <div class="a cx rule" data-t="21.5" data-a="blur" style="top:350px"><i></i><b></b><i></i></div>
+ <div class="a cx h" data-t="0" data-a="none" style="top:420px;width:980px;text-align:center;font-size:62px;"><span class="a" data-t="22.4" data-a="blur" style="position:relative;display:inline-block">Qurayshning</span> <span class="a g glow" data-t="22.96" data-a="blur" style="position:relative;display:inline-block">tuyalarini</span> <span class="a" data-t="23.52" data-a="blur" style="position:relative;display:inline-block">tortib</span> <span class="a" data-t="24.0" data-a="blur" style="position:relative;display:inline-block">oldi</span></div>
+ <div class="a cx" data-t="22.9" data-a="none" style="top:560px;display:flex;gap:18px"><div class="a" data-t="22.96" data-a="rise" style="position:relative;font-size:64px">🐪</div><div class="a" data-t="23.08" data-a="rise" style="position:relative;font-size:64px">🐪</div><div class="a" data-t="23.20" data-a="rise" style="position:relative;font-size:64px">🐪</div><div class="a" data-t="23.32" data-a="rise" style="position:relative;font-size:64px">🐪</div><div class="a" data-t="23.44" data-a="rise" style="position:relative;font-size:64px">🐪</div><div class="a" data-t="23.56" data-a="rise" style="position:relative;font-size:64px">🐪</div></div>
+ <div class="a cx it" data-t="24.68" data-a="blur" style="top:720px;font-size:58px;white-space:nowrap;color:#BFAF90">Ular orasida Payg‘ambarimizning bobolari</div>
+ <div class="a cx h g glow" data-t="27.28" data-a="zoom" style="top:820px;font-size:110px;white-space:nowrap">Abdulmuttolib</div>
+ <div class="a cx" data-t="28.4" data-a="rise" style="top:1010px"><div class="glass" style="padding:24px 50px;display:flex;align-items:center;gap:20px"><span class="h g count" data-t="28.4" data-d=".9" data-from="0" data-to="200" style="font-size:110px;line-height:1">0</span><span class="h" style="font-size:60px">ta tuyasi</span></div></div>
+</section>
+<section class="scene" data-s="30.44" data-e="48.18">
+ <div class="a cx it" data-t="30.48" data-a="blur" data-o="40.85" style="top:270px;font-size:58px;white-space:nowrap">Abdulmuttolib faqat <span class="g">tuyalarini so‘radi</span></div>
+ <div class="a cx cap" data-t="34.72" data-a="wide" data-ls=".42" data-o="40.85" style="top:420px">Abraha hayron bo‘ldi</div>
+ <div class="a cx" data-t="36.4" data-a="rise" data-o="40.85" style="top:500px"><div class="glass frame" style="width:920px"><div class="h" style="font-size:62px;line-height:1.2"><span class="rv" data-t="36.56">«Men</span> <span class="rv t-terra" data-t="36.8">Ka‘bani</span> <span class="rv t-terra" data-t="37.36">buzgani</span> <span class="rv" data-t="37.84">keldim,</span> <span class="rv" data-t="38.56">sen</span> <span class="rv" data-t="38.92">esa</span> <span class="rv t-terra" data-t="39.08">tuyalaringni</span> <span class="rv" data-t="39.68">so‘rayapsanmi?»</span></div></div></div>
+ <div class="a cx cap" data-t="40.88" data-a="wide" data-ls=".42" style="top:300px">Abdulmuttolib dedi</div>
+ <div class="a cx rule" data-t="41.0" data-a="blur" style="top:350px"><i></i><b></b><i></i></div>
+ <div class="a cx h" data-t="0" data-a="none" style="top:430px;width:980px;text-align:center;font-size:80px;"><span class="a" data-t="42.52" data-a="blur" style="position:relative;display:inline-block">«Men</span> <span class="a" data-t="42.88" data-a="blur" style="position:relative;display:inline-block">tuyalarning</span> <span class="a g glow" data-t="43.52" data-a="blur" style="position:relative;display:inline-block">egasiman.</span></div>
+ <div class="a cx" data-t="44.5" data-a="zoom" style="top:600px"><svg width="260" height="249" viewBox="0 0 240 230" style="overflow:visible"><defs><linearGradient id="kb2" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#1C1A18"/><stop offset="1" stop-color="#0A0908"/></linearGradient></defs>
+<ellipse class="kglow" cx="120" cy="200" rx="150" ry="26" fill="rgba(233,199,114,.18)" style="filter:blur(10px)"/>
+<path d="M30 60L120 30L210 60V190L120 220L30 190Z" fill="url(#kb2)" stroke="rgba(233,199,114,.5)" stroke-width="2"/>
+<path d="M120 30V220" stroke="rgba(233,199,114,.25)" stroke-width="2"/>
+<path d="M30 92L120 64L210 92V108L120 80L30 108Z" fill="#D4AF5F"/>
+<rect x="140" y="140" width="34" height="56" fill="#C9A24E" transform="skewY(-18) translate(0,52)"/></svg></div>
+ <div class="a cx h" data-t="0" data-a="none" style="top:880px;width:980px;text-align:center;font-size:84px;"><span class="a" data-t="44.56" data-a="blur" style="position:relative;display:inline-block">Uyning</span> <span class="a" data-t="45.04" data-a="blur" style="position:relative;display:inline-block">esa</span> <span class="a g glow" data-t="45.44" data-a="blur" style="position:relative;display:inline-block">O‘z</span> <span class="a g glow" data-t="45.72" data-a="blur" style="position:relative;display:inline-block">Egasi</span> <span class="a" data-t="46.16" data-a="blur" style="position:relative;display:inline-block">bor»</span></div>
+ <div class="a cx it g glow" data-t="46.72" data-a="blur" style="top:1010px;font-size:66px;white-space:nowrap">U himoya qiladi</div>
+</section>
+<section class="scene" data-s="48.18" data-e="60.04">
+ <div class="a cx cap" data-t="48.2" data-a="wide" data-ls=".42" style="top:300px">Ertasi kuni</div>
+ <div class="a cx rule" data-t="48.4" data-a="blur" style="top:350px"><i></i><b></b><i></i></div>
+ <div class="a cx" data-t="48.6" data-a="rise" style="top:420px"><div class="bigele"><svg width="380" height="278" viewBox="0 0 300 220" style="overflow:visible"><g fill="rgba(233,199,114,.10)" stroke="#E9C772" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+<path d="M70 70Q80 30 140 30Q210 30 232 70Q246 96 236 120L232 180H208L204 140Q170 150 130 146L126 180H102L98 140Q80 132 72 116Z"/>
+<path d="M232 70Q262 60 272 90Q280 120 270 160Q266 176 254 170" fill="none"/>
+<path d="M226 66Q200 60 196 92Q194 116 220 118" fill="rgba(233,199,114,.18)"/>
+<circle cx="246" cy="84" r="4" fill="#E9C772" stroke="none"/>
+<path d="M70 80Q52 90 56 112" fill="none"/></g></svg></div></div>
+ <div class="a cx h" data-t="50.08" data-a="blur" data-o="57.1" style="top:760px;font-size:70px;white-space:nowrap">Ka‘ba tomonga <span class="g">qadam bosmadi</span></div>
+ <div class="a cx it" data-t="52.16" data-a="blur" data-o="57.1" style="top:880px;font-size:56px;white-space:nowrap;color:#BFAF90">boshqa tarafga — yurardi</div>
+ <div class="a cx it" data-t="54.28" data-a="blur" data-o="57.1" style="top:970px;font-size:56px;white-space:nowrap">Makkaga — <span class="g">cho‘kib o‘tirardi</span></div>
+ <div class="a cx it" data-t="57.12" data-a="blur" style="top:820px;font-size:64px;white-space:nowrap">Shunda osmonni</div>
+ <div class="a cx h g glow" data-t="58.32" data-a="zoom" data-d=".5" style="top:920px;font-size:112px;white-space:nowrap">qushlar qopladi</div>
+</section>
+<section class="scene" data-s="60.04" data-e="72.66">
+ <div class="a cx" data-t="60.1" data-a="rise" style="top:380px"><div class="glass frame" style="width:940px">
+ <div class="dia" style="left:-8px;top:50%;margin-top:-8px"></div><div class="dia" style="right:-8px;top:50%;margin-top:-8px"></div>
+ <div class="cap">Fil surasi · 1, 3–5</div>
+ <div class="arabic g" style="font-size:52px;line-height:1.9;margin-top:22px">أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ ۝ وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ ۝ تَرْمِيهِم بِحِجَارَةٍ مِّن سِجِّيلٍ ۝ فَجَعَلَهُمْ كَعَصْفٍ مَّأْكُولٍ</div>
+ <div class="rule" style="margin:8px 0 14px"><i style="width:80px"></i><b></b><i style="width:80px"></i></div>
+ <div class="h" style="font-size:52px;line-height:1.18"><span class="rv" data-t="60.08">«Robbingiz</span> <span class="rv t-terra" data-t="60.72">fil</span> <span class="rv t-terra" data-t="61.08">egalarini</span> <span class="rv" data-t="61.56">nima</span> <span class="rv" data-t="61.8">qilganini</span> <span class="rv" data-t="62.32">ko‘rmadingizmi?</span> <span class="rv" data-t="63.56">Ularning</span> <span class="rv" data-t="64.12">ustiga</span> <span class="rv t-terra" data-t="64.56">to‘da-to‘da</span> <span class="rv t-terra" data-t="65.24">qushlarni</span> <span class="rv" data-t="65.76">yubordi.</span> <span class="rv" data-t="66.64">Ularni</span> <span class="rv t-terra" data-t="67.04">sopol</span> <span class="rv t-terra" data-t="67.52">toshlar</span> <span class="rv" data-t="68.0">bilan</span> <span class="rv" data-t="68.24">otdi.</span> <span class="rv" data-t="69.04">Va</span> <span class="rv" data-t="69.28">ularni</span> <span class="rv" data-t="69.6">yeb</span> <span class="rv" data-t="69.88">tashlangan</span> <span class="rv t-terra" data-t="70.56">ekin</span> <span class="rv t-terra" data-t="70.88">poyasidek</span> <span class="rv" data-t="71.56">qilib</span> <span class="rv" data-t="71.8">qo‘ydi»</span></div></div></div>
+</section>
+<section class="scene" data-s="72.66" data-e="78.2">
+ <div class="rays" id="rays1"></div>
+ <div class="a cx it" data-t="72.68" data-a="blur" style="top:420px;font-size:70px;white-space:nowrap">Aynan shu yili —</div>
+ <div class="a cx h g glow" data-t="74.4" data-a="zoom" data-d=".6" style="top:540px;font-size:150px;white-space:nowrap">Fil yili</div>
+ <div class="a cx rule" data-t="75.4" data-a="blur" style="top:760px"><i></i><b></b><i></i></div>
+ <div class="a cx h" data-t="76.08" data-a="blur" style="top:820px;font-size:70px;white-space:nowrap">Payg‘ambarimiz <span class="g">dunyoga keldilar</span></div>
+ <div class="a cx cap" data-t="76.6" data-a="wide" data-ls=".42" style="top:960px;color:#9C8E74">sollallohu alayhi va sallam</div>
+</section>
+<section class="scene" data-s="78.2" data-e="87.6">
+ <div class="a cx it" data-t="78.24" data-a="blur" style="top:270px;font-size:60px;white-space:nowrap">Ko‘p yillar o‘tib, <span class="g">Hudaybiyada</span></div>
+ <div class="a cx it" data-t="80.24" data-a="blur" style="top:370px;font-size:56px;white-space:nowrap;color:#BFAF90">u zotning tuyalari cho‘kib qoldi</div>
+ <div class="a cx" data-t="83.2" data-a="rise" style="top:520px"><div class="glass frame" style="width:940px">
+ <div class="dia" style="left:-8px;top:50%;margin-top:-8px"></div><div class="dia" style="right:-8px;top:50%;margin-top:-8px"></div>
+ <div class="cap">Buxoriy, 2731</div>
+ <div class="arabic g" style="font-size:74px;line-height:1.9;margin-top:22px">حَبَسَهَا حَابِسُ الْفِيلِ</div>
+ <div class="rule" style="margin:8px 0 14px"><i style="width:80px"></i><b></b><i style="width:80px"></i></div>
+ <div class="h" style="font-size:70px;line-height:1.18"><span class="rv" data-t="84.12">«Uni</span> <span class="rv t-terra" data-t="84.48">filni</span> <span class="rv t-terra" data-t="84.88">to‘xtatgan</span> <span class="rv t-terra" data-t="85.6">Zot</span> <span class="rv" data-t="85.92">to‘xtatdi»</span></div></div></div>
+</section>
+<section class="scene" data-s="87.6" data-e="96.6">
+ <div class="a cx h" data-t="0" data-a="none" style="top:330px;width:980px;text-align:center;font-size:62px;"><span class="a" data-t="87.76" data-a="blur" style="position:relative;display:inline-block">Qurayshda</span> <span class="a" data-t="88.52" data-a="blur" style="position:relative;display:inline-block">na</span> <span class="a" data-t="88.68" data-a="blur" style="position:relative;display:inline-block">qo‘shin,</span> <span class="a" data-t="89.36" data-a="blur" style="position:relative;display:inline-block">na</span> <span class="a" data-t="89.6" data-a="blur" style="position:relative;display:inline-block">kuch</span> <span class="a" data-t="89.92" data-a="blur" style="position:relative;display:inline-block">bor</span> <span class="a" data-t="90.16" data-a="blur" style="position:relative;display:inline-block">edi</span></div>
+ <div class="a cx it" data-t="90.72" data-a="blur" style="top:460px;font-size:60px;white-space:nowrap">Lekin</div>
+ <div class="a cx h g glow" data-t="91.28" data-a="zoom" style="top:550px;font-size:110px;white-space:nowrap">Uyning Egasi bor edi</div>
+ <div class="a cx it" data-t="93.2" data-a="blur" style="top:780px;font-size:58px;white-space:nowrap">Sizda ham</div>
+ <div class="a cx h" data-t="94.08" data-a="zoom" style="top:870px;font-size:84px;white-space:nowrap">«bunga kuchim yetmaydi»</div>
+ <div class="a cx it" data-t="95.3" data-a="blur" style="top:990px;font-size:58px;white-space:nowrap">degan muammo bormi?</div>
+</section>
+<section class="scene" data-s="96.6" data-e="100.36">
+ <div class="rays" id="rays2"></div>
+ <div class="a cx h" data-t="0" data-a="none" style="top:520px;width:980px;text-align:center;font-size:96px;"><span class="a" data-t="96.96" data-a="blur" style="position:relative;display:inline-block">Kuchingiz</span> <span class="a" data-t="97.52" data-a="blur" style="position:relative;display:inline-block">yetmagan</span> <span class="a" data-t="98.0" data-a="blur" style="position:relative;display:inline-block">joyda</span></div>
+ <div class="a cx rule" data-t="98.3" data-a="blur" style="top:680px"><i></i><b></b><i></i></div>
+ <div class="a cx h g glow" data-t="98.64" data-a="zoom" data-d=".5" style="top:760px;font-size:112px;white-space:nowrap">Allohning kuchi</div>
+ <div class="a cx h g glow" data-t="99.52" data-a="zoom" data-d=".4" style="top:890px;font-size:112px;white-space:nowrap">yetadi</div>
+</section>
+<section class="scene" data-s="100.36" data-e="999">
+<div class="a cx" data-t="101.0" data-a="pop" style="top:600px"><svg width="420" height="420" viewBox="0 0 200 200" id="tasbeh" data-t0="101.05"></svg><div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="serif count" data-t="101.05" data-d="1.3" data-from="0" data-to="33" style="font-size:140px;line-height:1;color:#F3E7CF">0</div><div style="font:600 24px Mont;color:#9C8E74">/ 33</div></div></div>
+<div class="a cx" data-t="103.68" data-a="stamp" data-d=".32" data-r="-2" style="top:1060px"><div class="h g glow" style="font-size:118px;white-space:nowrap;letter-spacing:.04em">Zikr marafoni</div></div>
+<div class="a cx it g glow" data-t="100.4" data-a="blur" data-o="111.6" style="top:290px;font-size:62px;white-space:nowrap">Har kuni zikr — Allohga suyanish</div>
+<div class="a cx" data-t="111.64" data-a="rise" style="top:290px;display:flex;gap:22px"><div class="chip" style="font-size:36px">📌 Saqlab qo‘ying</div><div class="a chip" data-t="113.2" data-a="rise" style="position:relative;font-size:36px">📤 Yaqinlaringizga yuboring</div></div>
+<div class="a cx" data-t="106.5" data-a="zoom" style="top:1220px"><div class="chip" style="font-size:38px;white-space:nowrap;border:2px solid #E9C772">💬 Izohlarga <span class="g" style="font-size:54px">«+»</span> qoldiring</div></div>
+<div class="a hand cx" data-t="108.24" data-a="blur" style="top:1330px;font-size:46px;color:#9C8E74">yoki</div>
+<div class="a cx" data-t="108.8" data-a="up" style="top:1395px"><div class="chip" style="font-size:38px;white-space:nowrap">⬆️ Sahifamiz tepasidagi havola</div></div>
+<div class="a cx" data-t="110.5" data-a="pop" style="top:1520px"><div style="background:linear-gradient(180deg,#F8E3A6,#D4AF5F 55%,#B48A3C);color:#1A1408;font:700 50px Mont;padding:28px 60px;border-radius:60px;white-space:nowrap;box-shadow:0 0 40px rgba(233,199,114,.45),0 18px 30px rgba(0,0,0,.4)">Marafonga qo‘shiling!</div></div>
+<div class="a cx" data-t="110.9" data-a="fade" style="top:1680px;font:600 28px Mont;color:#9C8E74;white-space:nowrap">Telegram: @Zikrmarafoni_bot</div>
+</section>
+
+<div id="dark"></div><div id="sub" data-hide="100.3"><div id="subbox"></div></div></div><script>(function(){
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+let seed=23;const rnd=()=>{seed=(seed*16807)%2147483647;return (seed-1)/2147483646};
+const fx=document.getElementById('fx'),f=fx.getContext('2d');
+const P=[...Array(140)].map(()=>({x:rnd()*1080,y:rnd()*1920,s:.6+rnd()*2.2,v:8+rnd()*26,a:.15+rnd()*.5,ph:rnd()*6.28}));
+const B=[...Array(70)].map(()=>({x0:-200-rnd()*900,y:120+rnd()*700,v:260+rnd()*200,s:10+rnd()*14,ph:rnd()*6.28}));
+const ST=[...Array(90)].map(()=>({x:60+rnd()*960,d:rnd()*2.2,v:600+rnd()*500}));
+const TINT=[[-9,[50,30,10]],[9.56,[30,22,14]],[21.24,[48,32,12]],[30.44,[40,22,12]],[48.18,[24,20,30]],[60.04,[10,26,52]],[72.66,[60,42,12]],[78.2,[14,30,40]],[87.6,[14,22,50]],[96.6,[50,36,12]],[100.36,[40,28,12]]];
+function tint(t){let i=0;while(i<TINT.length-1&&t>=TINT[i+1][0])i++;const a=TINT[i][1];if(i==TINT.length-1)return a;const b=TINT[i+1][1],k=cl((t-(TINT[i+1][0]-.5))/1);return a.map((v,j)=>v+(b[j]-v)*k)}
+const scenes=[...document.querySelectorAll('.scene')],star=document.getElementById('star');
+const rays=[...document.querySelectorAll('.rays')],elw=[...document.querySelectorAll('.elw')],big=[...document.querySelectorAll('.bigele')],kg=[...document.querySelectorAll('.kglow')];
+const R=window.render;
+window.render=function(t){R(t);
+ const [r,g,b]=tint(t);const gr=f.createRadialGradient(540,820,40,540,820,1250);gr.addColorStop(0,`rgb(${r|0},${g|0},${b|0})`);gr.addColorStop(1,'#04050A');f.fillStyle=gr;f.fillRect(0,0,1080,1920);
+ P.forEach(p=>{const y=((p.y-t*p.v)%1920+1920)%1920,x=p.x+Math.sin(t*.4+p.ph)*20;f.globalAlpha=p.a*(.6+.4*Math.sin(t*2+p.ph));f.fillStyle='#E9C772';f.beginPath();f.arc(x,y,p.s,0,6.283);f.fill();});
+ // birds flock 57.2-73
+ const bk=cl((t-57.2)/.8)*(1-cl((t-72.4)/1));
+ if(bk>0){f.strokeStyle='#F3E7CF';f.lineWidth=3;f.lineCap='round';B.forEach(o=>{const x=o.x0+(t-57.2)*o.v,y=o.y+Math.sin(t*2+o.ph)*14;if(x<-60||x>1140)return;const w=Math.sin(t*14+o.ph)*o.s*.6;f.globalAlpha=bk*.85;f.beginPath();f.moveTo(x-o.s,y-w);f.quadraticCurveTo(x-o.s*.4,y-2,x,y);f.quadraticCurveTo(x+o.s*.4,y-2,x+o.s,y-w);f.stroke();});
+  // falling stones 63-70
+  const sk=cl((t-62.8)/.5)*(1-cl((t-70.5)/.8));if(sk>0)ST.forEach(s=>{const y=((t-62.8-s.d)*s.v)%1600;if(y<0)return;f.globalAlpha=sk*.8;f.fillStyle='#C9714E';f.beginPath();f.arc(s.x,300+y,4,0,6.283);f.fill();});}
+ f.globalAlpha=1;
+ star.style.transform=`rotate(${t*2.2}deg) scale(${1+.04*Math.sin(t*.3)})`;
+ scenes.forEach(sc=>{const s=+sc.dataset.s,e=Math.min(+sc.dataset.e,s+14);const k=cl((t-s)/(e-s));sc.style.transform=`scale(${1+.035*k})`;});
+ elw.forEach(x=>x.style.transform=`translateX(${Math.min(t,9)*5}px)`);
+ // big elephant: walks, then kneels at 54.3
+ big.forEach(x=>{const kn=cl((t-54.4)/.7);x.style.transformOrigin='50% 100%';x.style.transform=`translateY(${kn*40+Math.sin(t*3)*4*(1-kn)}px) scaleY(${1-kn*.18}) rotate(${Math.sin(t*1.6)*1.5*(1-kn)}deg)`;});
+ kg.forEach(k=>k.style.opacity=.6+.4*Math.sin(t*2));
+ rays.forEach(x=>x.style.transform=`rotate(${t*3}deg)`);
+};})();</script><script>(function(){const s=document.getElementById('tasbeh');const t0=+s.dataset.t0;let h='';
+for(let i=0;i<33;i++){const a=-Math.PI/2+i*2*Math.PI/33,x=100+82*Math.cos(a),y=100+82*Math.sin(a);
+h+=`<circle class="bead" data-t="${(t0+i*1.3/33).toFixed(3)}" data-on="${i%11==10?'#FFF1C4':'#D4AF5F'}" data-off="rgba(233,199,114,.14)" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7.4"/>`;}
+h+=`<path d="M100 182v14" stroke="#E9C772" stroke-width="5"/>`;s.innerHTML=h;})();window.render(0);</script></body></html>
