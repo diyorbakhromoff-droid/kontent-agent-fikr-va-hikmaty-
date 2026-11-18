@@ -1,24 +1,21 @@
-SARLAVHA (sariq lenta): Iymon nega sustlashadi?
+SARLAVHA (sariq lenta): Iymon sustlashmasligi uchun
 
-[HOOK] Bir sahoba ko'chada: "Hanzala munofiq bo'lib qoldi!" deb ketyapti. U o'zi haqida gapirayotgan edi. Nega?
+[HOOK] Payg'ambarimiz iymon sustlashmasligi uchun qanday tavsiyalar berganlarini bilasizmi? Avval bir voqea.
 
-[HIKOYA] Hanzala Abu Bakrga dedi: "Payg'ambarimiz huzurida jannat va do'zaxni ko'rib turgandek bo'lamiz. Uyga qaytib, ahli-ayol, tirikchilik bilan andarmon bo'lsak, ko'p narsani unutamiz."
+[HIKOYA] Bir sahoba ko'chada: "Hanzala munofiq bo'lib qoldi!" deb ketyapti. U o'zi haqida gapirayotgan edi.
+Hanzala Abu Bakrga dedi: "Payg'ambarimiz huzurida jannat va do'zaxni ko'rib turgandek bo'lamiz. Uyga qaytib, ahli-ayol, tirikchilik bilan andarmon bo'lsak, ko'p narsani unutamiz."
 Abu Bakr dedi: "Men ham shundayman."
-Ikkalasi Payg'ambarimiz huzuriga borishdi.
 
-[HADIS - Muslim, 2750] Payg'ambarimiz dedilar: "Agar doim mening huzurimdagi holatda bo'lsangiz, farishtalar yo'llaringizda siz bilan qo'l berib ko'rishardi. Lekin, ey Hanzala, bir soat u, bir soat bu."
+[HADIS - Muslim, 2750] Payg'ambarimiz ularga dedilar: "Ey Hanzala, bir soat u, bir soat bu."
+Demak, iymonning ko'tarilib-tushib turishi — tabiiy. Muhimi, uni so'ndirib qo'ymaslik.
 
-[TUSHUNTIRISH 1] Demak, iymonning ko'tarilib-tushib turishi — tabiiy. Lekin nega u sekin-asta so'nib boradi?
+[1-TAVSIYA - Termiziy, 3334] Gunohni darhol tavba bilan o'chiring. Payg'ambarimiz aytdilar: "Banda gunoh qilsa, qalbida qora nuqta paydo bo'ladi. Tavba qilsa, qalbi tozalanadi. Yana qaytarsa, nuqta ko'payib, butun qalbini qoplab oladi."
+[OYAT - Mutoffifin, 14] Alloh buni "zang" deb atadi.
+Bitta qoldirilgan namoz, bir soatlik behuda ekran — har biri bitta nuqta.
 
-[HADIS - Termiziy, 3334] Payg'ambarimiz aytdilar: "Banda gunoh qilsa, qalbida qora nuqta paydo bo'ladi. Tavba qilsa, qalbi tozalanadi. Yana qaytarsa, nuqta ko'payib, butun qalbini qoplab oladi."
+[2-TAVSIYA - Termiziy, 2140] Shu duoni ko'p qiling. Payg'ambarimiz eng ko'p aytgan duolardan biri: "Yo muqollibal qulub, sabbit qalbiy 'ala diynik" — "Ey qalblarni o'zgartiruvchi Zot, qalbimni diningda sobit qil."
 
-[OYAT - Mutoffifin, 14] Alloh buni "zang" deb atadi: "Yo'q! Balki ularning qilgan ishlari qalblarini zanglatib qo'ygan."
-
-[TUSHUNTIRISH 2] Bitta "kichkina" gunoh. Bitta qoldirilgan namoz. Bir soatlik behuda ekran. Har biri — bitta nuqta. Bir kuni qarasangiz: Qur'on ta'sir qilmaydi, namoz lazzat bermaydi.
-
-[YECHIM - Termiziy, 2140] Payg'ambarimiz eng ko'p qilgan duolardan biri: "Yo muqollibal qulub, sabbit qalbiy 'ala diynik" — "Ey qalblarni o'zgartiruvchi Zot, qalbimni diningda sobit qil."
-
-[XULOSA] Iymon sustlashsa, qo'rqmang — tavba bilan qalbingizni tozalang.
+[XULOSA] Iymon sustlashsa, qo'rqmang — tavba bilan tozalang, duo bilan mustahkamlang.
 
 [CTA] Har kuni zikr bilan qalbni tozalash uchun Zikr marafonini tashkil qildik. Qo'shilish uchun izohlarga «+» qoldiring yoki sahifamiz tepasidagi havola orqali qo'shiling.
 Videoni saqlab qo'ying va yaqinlaringizga yuboring.
