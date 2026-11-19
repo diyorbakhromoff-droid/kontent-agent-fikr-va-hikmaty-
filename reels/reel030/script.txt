@@ -1,23 +1,25 @@
-SARLAVHA (sariq lenta): Jinlardan qo'rqish kerakmi?
+SARLAVHA (sariq lenta): Jinlar haqida 4 ta fakt
 
-[HOOK] Hozir, shu xonada sizdan boshqa yana kimdir bo'lishi mumkin. U sizni ko'radi — siz esa uni ko'rmaysiz.
+[HOOK - Jin, 1] Bilasizmi, jinlar ham Qur'on tinglaydi? Bir guruh jin Payg'ambarimizning qiroatini eshitib, qavmiga qaytib: «Biz ajoyib Qur'onni eshitdik!» deyishgan.
+إِنَّا سَمِعْنَا قُرْآنًا عَجَبًا
 
-[OYAT - Zoriyot, 56] وَمَا خَلَقْتُ الْجِنَّ وَالْإِنسَ إِلَّا لِيَعْبُدُونِ
-Jinlar haqiqatda bormi? Ha. «Jinlar va insonlarni faqat Menga ibodat qilishlari uchun yaratdim.»
-[OYAT - Rahmon, 15; Jin, 14] Ular olov alangasidan yaratilgan. Ular orasida musulmonlari ham, zolimlari ham bor.
+Jinlar haqida yana qanday faktlar bor?
 
-[OYAT - A'rof, 27] إِنَّهُ يَرَاكُمْ هُوَ وَقَبِيلُهُ مِنْ حَيْثُ لَا تَرَوْنَهُمْ
-«U va uning qabilasi sizni, siz ularni ko'rmaydigan joydan ko'radi.»
+[1-FAKT - Hijr, 27; Muslim, 2996] Ular insondan oldin yaratilgan. Payg'ambarimiz aytdilar: «Farishtalar nurdan, jinlar olov alangasidan, Odam esa tuproqdan yaratildi.»
 
-[OYAT - Baqara, 102; Niso, 76] Unda ulardan qo'rqish kerakmi? Yo'q!
+[2-FAKT - Zoriyot, 56; Jin, 14; Kahf, 50] Ular ham Allohga ibodat qilish uchun yaratilgan. Ular orasida musulmonlari ham, zolimlari ham bor. Iblis ham — jinlardan.
+
+[3-FAKT - Muslim, 450] Ular ham ovqatlanadi. Bismillah aytilgan suyak ularning rizqi.
+
+[4-FAKT - Saba, 14] Ular g'aybni bilmaydi. Sulaymon alayhissalom vafot etganda, jinlar buni bilmay, uzoq vaqt og'ir ishni davom ettirgan.
+
+[OYAT - Baqara, 102; Niso, 76] Unda ulardan qo'rqish kerakmi? Yo'q.
 وَمَا هُم بِضَارِّينَ بِهِ مِنْ أَحَدٍ إِلَّا بِإِذْنِ اللَّهِ — «Ular Allohning iznisiz hech kimga zarar yetkaza olmaydi.»
 إِنَّ كَيْدَ الشَّيْطَانِ كَانَ ضَعِيفًا — «Shaytonning hiylasi zaifdir.»
 
-[OYAT - Jin, 6] Aksincha, qo'rquv ularga kuch beradi. Jinlardan panoh so'ragan odamlar haqida: «Bu ularning qo'rquvini yanada oshirdi.»
+[HADIS - Muslim, 2018; Buxoriy, 2311] Himoya esa juda oddiy. Uyga kirganda va ovqatlanganda «Bismillah» deng — shayton: «Bu yerda tunash ham, ovqat ham yo'q», deb chiqib ketadi. Uxlashdan oldin Oyatal kursini o'qing — tong otguncha Allohdan qo'riqchi bo'ladi.
 
-[HADIS - Muslim, 2018; Buxoriy, 2311] Himoya esa juda oddiy. Uyga kirganda va ovqatlanganda «Bismillah» deng — shayton: «Bu yerda tunash ham, ovqat ham yo'q», deb chiqib ketadi. Uxlashdan oldin Oyatal kursini o'qing — tong otguncha Allohdan qo'riqchi bo'ladi va shayton sizga yaqinlasha olmaydi.
-
-[XULOSA] Jindan qo'rqqan odam unga eshik ochadi. Allohdan qo'rqqan odam esa hech narsadan qo'rqmaydi. Chunki jinni ham, sizni ham yaratgan — bitta Zot.
+[XULOSA] Jindan qo'rqqan odam unga eshik ochadi. Allohga suyangan odam esa hech narsadan qo'rqmaydi. Chunki jinni ham, sizni ham yaratgan — bitta Zot.
 
 [CTA] Har kuni Allohni zikr qilib, Uning himoyasida bo'lish uchun Zikr marafonini tashkil qildik. Qo'shilish uchun izohlarga «+» qoldiring yoki sahifamiz tepasidagi havola orqali qo'shiling.
-Videoni saqlab qo'ying va jinlardan qo'rqib yurgan yaqiningizga yuboring.
+Videoni saqlab qo'ying va yaqinlaringizga yuboring.
